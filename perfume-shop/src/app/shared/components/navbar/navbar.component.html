@@ -1,1 +1,22 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="navbar-container">
+
+    <div class="logo">Perfume Shop</div>
+
+    <ul class="nav-links">
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="/products">Products</a></li>
+      <li><a routerLink="/cart">Cart</a></li>
+      <!-- <li><a routerLink="/auth/signin">Login</a></li>
+      <li><a routerLink="/auth/signup">Signup</a></li> -->
+      <li *ngIf="!isLoggedIn()"><a routerLink="/auth/signin">Login</a></li>
+      <li *ngIf="!isLoggedIn()"><a routerLink="/auth/signup">Signup</a></li>
+      <li *ngIf="isLoggedIn()"><a routerLink="/orders">Orders</a></li>
+      <li *ngIf="isLoggedIn()" (click)="logout()" class="logout-btn">Logout</li>
+
+
+
+    </ul>
+
+  </div>
+</nav>

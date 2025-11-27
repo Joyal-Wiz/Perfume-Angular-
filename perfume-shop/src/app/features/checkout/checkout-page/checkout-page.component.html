@@ -1,1 +1,25 @@
-<p>checkout-page works!</p>
+<!-- src/app/features/checkout/checkout-page/checkout-page.component.html -->
+<div class="checkout-container">
+  <h2>Checkout</h2>
+
+  <form #form="ngForm" (ngSubmit)="placeOrder()">
+
+    <label>Full Name</label>
+    <input type="text" name="name" required [(ngModel)]="checkoutData.name" />
+
+    <label>Address</label>
+    <textarea name="address" required [(ngModel)]="checkoutData.address"></textarea>
+
+    <label>Card Number (demo)</label>
+    <input type="text" name="card" required [(ngModel)]="checkoutData.card" />
+
+    <button type="submit">Place Order</button>
+  </form>
+</div>
+
+<!-- optional: payment modal component if you use it -->
+<app-payment-confirmed-modal
+  *ngIf="showModal"
+  [order]="order"
+  (close)="onModalClose()">
+</app-payment-confirmed-modal>

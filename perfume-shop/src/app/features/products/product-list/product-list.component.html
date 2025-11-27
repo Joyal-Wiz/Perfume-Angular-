@@ -1,1 +1,14 @@
-<p>product-list works!</p>
+<div class="products-container">
+  <h2>Browse Perfumes</h2>
+
+  <div class="products-grid">
+    <div class="card" *ngFor="let p of products">
+      <img [src]="p.image" alt="Perfume">
+
+      <h3>{{ p.name }}</h3>
+      <p class="price">$ {{ p.price }}</p>
+
+      <button (click)="addProduct(p)">Add to Cart</button>
+    </div>
+  </div>
+</div>

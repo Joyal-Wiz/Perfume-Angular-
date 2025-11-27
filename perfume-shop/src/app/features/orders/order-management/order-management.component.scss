@@ -1,0 +1,44 @@
+.item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgb(255, 30, 30);
+  transition: 0.2s ease-in-out;
+}
+
+.item-card:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.qty {
+  font-size: 14px;
+  color: #777;
+  margin-top: 3px;
+}
+
+.right {
+  text-align: right;
+}
+
+.price {
+  font-size: 17px;
+  font-weight: 600;
+  color: #4CAF50;
+}
+

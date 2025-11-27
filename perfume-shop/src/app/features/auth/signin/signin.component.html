@@ -1,1 +1,32 @@
-<p>signin works!</p>
+<div class="signin-container">
+  <div class="signin-card">
+
+    <h2>Sign In</h2>
+    <p class="subtitle">Welcome back! Please login to continue.</p>
+
+    <form #form="ngForm" (ngSubmit)="onSignin()">
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" [(ngModel)]="formData.email" required />
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="password" [(ngModel)]="formData.password" required />
+      </div>
+
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+
+    <p class="link-text">
+      Don't have an account?
+      <a routerLink="/auth/signup">Create One</a>
+    </p>
+
+    <p class="forgot-text">
+      <a routerLink="/auth/forgot-password">Forgot Password?</a>
+    </p>
+
+  </div>
+</div>

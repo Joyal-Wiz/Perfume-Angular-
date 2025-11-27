@@ -1,1 +1,25 @@
-<p>cart-page works!</p>
+
+<div class="cart-item" *ngFor="let item of cartItems">
+  
+  <div class="left">
+    <h4>{{ item.name }}</h4>
+    <p>Price: ${{ item.price }}</p>
+
+    <div class="qty-box">
+      <button (click)="decrease(item)">−</button>
+      <span>{{ item.quantity }}</span>
+      <button (click)="increase(item)">+</button>
+    </div>
+  </div>
+
+  <div class="right">
+    <p class="subtotal">$ {{ item.price * item.quantity }}</p>
+    <button class="remove" (click)="remove(item)">Remove</button>
+  </div>
+
+</div>
+
+<hr>
+
+<h3>Total: ${{ getTotal() }}</h3>
+<button class="buy-btn" (click)="buyNow()">Buy Now</button>

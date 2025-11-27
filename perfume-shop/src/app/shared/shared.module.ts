@@ -6,6 +6,9 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { PaymentConfirmedModalComponent } from './components/payment-confirmed-modal/payment-confirmed-modal.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -16,10 +19,19 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     SidenavComponent,
     ConfirmationModalComponent,
     PaymentConfirmedModalComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    DashboardComponent,
+    HomePageComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule,
+  ],
+  exports: [
+  NavbarComponent,
+  HomePageComponent,
+  PaymentConfirmedModalComponent,
+],
+
 })
 export class SharedModule { }

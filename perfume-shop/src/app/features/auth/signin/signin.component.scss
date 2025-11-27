@@ -1,0 +1,91 @@
+.signin-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e8f5e9; // light green background
+}
+
+.signin-card {
+  width: 350px;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #2e7d32; // green heading
+}
+
+.subtitle {
+  margin-bottom: 25px;
+  color: #558b2f; // subtitle green
+  font-size: 14px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #2e7d32;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 7px;
+  border: 1px solid #9ccc65;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #66bb6a; // focused green border
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #43a047; // main green button
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #388e3c; // darker green on hover
+}
+
+.link-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+.link-text a {
+  text-decoration: none;
+  color: #2e7d32; // green link
+  font-weight: 500;
+}
+
+.forgot-text {
+  margin-top: 10px;
+}
+
+.forgot-text a {
+  color: #2e7d32;
+  font-size: 13px;
+  text-decoration: none;
+}

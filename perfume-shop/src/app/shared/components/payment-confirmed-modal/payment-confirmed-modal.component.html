@@ -1,1 +1,11 @@
-<p>payment-confirmed-modal works!</p>
+<div class="modal-backdrop">
+  <div class="modal-box">
+    <h2>Payment Successful 🎉</h2>
+
+    <p>Your order has been placed successfully.</p>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Total Amount:</strong> ${{ order.total }}</p>
+
+    <button (click)="closeModal()">Continue</button>
+  </div>
+</div>
