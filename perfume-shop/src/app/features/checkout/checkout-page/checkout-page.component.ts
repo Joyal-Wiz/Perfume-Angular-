@@ -61,4 +61,27 @@ const newOrder = {
     this.showModal = false;
     this.router.navigate(['/orders']);
   }
+  cartItems: any[] = [];
+
+ngOnInit(): void {
+  this.cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+}
+getSubtotal() {
+  return this.cartItems.reduce(
+    (sum, i) => sum + (i.price * i.quantity),
+    0
+  );
+}
+
+getTotalDiscount() {
+  return this.cartItems.reduce(
+    (sum, i) => sum + ((i.price * i.discount / 100) * i.quantity),
+    0
+  );
+}
+
+getTotal() {
+  return this.getSubtotal() - this.getTotalDiscount();
+}
+
 }

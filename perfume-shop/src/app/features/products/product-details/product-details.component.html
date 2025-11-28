@@ -1,44 +1,77 @@
 <div class="details-container" *ngIf="product">
 
+  <!-- LEFT: IMAGE -->
   <div class="left">
-    <img [src]="product.image" class="main-image">
+    <div class="offer-badge" *ngIf="product.discount">
+      -{{ product.discount }}% OFF
+    </div>
+
+    <img [src]="product.image" class="main-image" alt="product-image">
   </div>
 
+  <!-- RIGHT: PRODUCT INFO -->
   <div class="right">
 
-    <h1>{{ product.name }}</h1>
-    <p class="brand">{{ product.brand }}</p>
+    <h1 class="title">{{ product.name }}</h1>
+    <p class="brand">By {{ product.brand }}</p>
 
+    <!-- PRICE -->
     <div class="price-box">
       <span class="price">
         ₹{{ (product.price - (product.price * product.discount / 100)).toFixed(2) }}
       </span>
 
-      <span class="old-price">
+      <span class="old-price" *ngIf="product.discount">
         ₹{{ product.price }}
-      </span>
-
-      <span class="discount-tag">
-        -{{ product.discount }}% OFF
       </span>
     </div>
 
+    <!-- CATEGORY -->
     <p class="category">
       Category: <strong>{{ product.category }}</strong>
     </p>
 
+    <!-- DESCRIPTION -->
+    <div class="description-box">
+      <h3>Product Description</h3>
+      <p>
+        Indulge in the luxurious aroma of <strong>{{ product.name }}</strong>.
+        Crafted with premium notes and long-lasting fragrance, this perfume is
+        perfect for any occasion — day or night.
+      </p>
+    </div>
+
+    <!-- SPECIAL OFFER BOX -->
+    <div class="special-offer" *ngIf="product.discount > 0">
+      ✨✨ <strong>Special Offer:</strong> Save {{ product.discount }}% today!  
+      Limited-time exclusive discount.✨✨
+    </div>
+
+    <!-- STOCK -->
     <p class="stock" [class.out]="product.stock === 0">
       {{ product.stock === 0 ? "Out of Stock" : product.stock + " items left" }}
     </p>
 
-    <button 
-      class="add-btn"
-      [disabled]="product.stock === 0"
-      (click)="addToCart()"
-    >
-      {{ product.stock === 0 ? "Out of Stock" : "Add to Cart" }}
-    </button>
+    <!-- BUTTONS -->
+    <div class="action-buttons">
+
+      <button 
+        class="add-btn"
+        [disabled]="product.stock === 0"
+        (click)="addToCart()"
+      >
+        Add to Cart
+      </button>
+
+      <button 
+        class="buy-btn"
+        [disabled]="product.stock === 0"
+        (click)="buyNow()"
+      >
+        Buy Now
+      </button>
+
+    </div>
 
   </div>
-
 </div>

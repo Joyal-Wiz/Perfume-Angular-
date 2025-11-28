@@ -6,28 +6,47 @@
 </div>
 
 <div class="order-list">
-  <div class="order-card" *ngFor="let order of orders" (click)="openOrder(order.id)">
-    
-    <div class="order-top">
-      <div>
-        <h3>Order #{{ order.id }}</h3>
-        <p class="date">{{ order.date }}</p>
+
+  <div class="order-card"
+       *ngFor="let order of orders"
+       (click)="openOrder(order.id)">
+
+    <!-- LEFT SIDE -->
+    <div class="order-left">
+
+      <!-- Product Image -->
+      <div class="product-thumb">
+        <img [src]="order.items[0].image" />
       </div>
+
+      <!-- Product Info -->
+      <div class="info">
+        <h3 class="name">{{ order.items[0].name }}</h3>
+        <p class="brand">{{ order.items[0].brand }}</p>
+
+        <div class="pill">
+          {{ order.items.length }} items
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="order-right">
+
       <span class="badge" [ngClass]="order.status.toLowerCase()">
         {{ order.status }}
       </span>
-    </div>
 
-    <div class="order-items">
-      <p *ngFor="let item of order.items" class="item">
-        {{ item.name }} × {{ item.quantity }}
-      </p>
-    </div>
-
-    <div class="order-bottom">
       <p class="total">₹{{ order.total }}</p>
-      <button class="details-btn">View Details</button>
+
+      <button class="details-btn">
+        View Details 
+        <span class="arrow">→</span>
+      </button>
+
     </div>
 
   </div>
+
 </div>

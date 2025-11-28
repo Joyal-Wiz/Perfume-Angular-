@@ -40,5 +40,9 @@ export class ProductDetailsComponent implements OnInit {
     this.cartService.addToCart(this.product);
     alert("Product added to cart!");
   }
+  buyNow() {
+  this.router.navigate(['/checkout']);
+}
+
 
 }

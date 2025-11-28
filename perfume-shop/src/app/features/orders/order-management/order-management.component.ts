@@ -18,26 +18,22 @@ export class OrderManagementComponent implements OnInit {
 
     this.order = allOrders.find((o: any) => o.id === id);
   }
-  cancelOrder() {
+cancelOrder() {
   if (!confirm("Are you sure you want to cancel this order?")) return;
 
-  // Change status to Canceled
-  this.order.status = 'Canceled';
+  this.order.status = 'Cancelled';  // use standard spelling
 
-  // Update localStorage
   const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
-  const updated = allOrders.map((o: any) => {
-    if (o.id === this.order.id) {
-      return this.order;
-    }
-    return o;
-  });
+  const updated = allOrders.map((o: any) =>
+    o.id === this.order.id ? this.order : o
+  );
 
   localStorage.setItem('orders', JSON.stringify(updated));
 
-  alert("Order canceled successfully!");
+  alert("Order cancelled successfully!");
 }
+
 
   
 }

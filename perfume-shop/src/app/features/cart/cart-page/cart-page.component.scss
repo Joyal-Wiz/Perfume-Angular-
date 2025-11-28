@@ -163,3 +163,19 @@
     border-radius: 8px;
   }
 }
+.summary-products {
+  margin-bottom: 12px;
+}
+
+.summary-product-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.summary-discount {
+  color: #28a745;
+  font-size: 12px;
+  margin-left: 2px;
+}

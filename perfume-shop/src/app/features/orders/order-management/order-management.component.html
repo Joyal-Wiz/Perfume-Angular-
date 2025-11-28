@@ -1,62 +1,104 @@
 <div class="order-container" *ngIf="order">
 
   <!-- ORDER HEADER -->
-  <div class="header">
-    <h2>Order Details</h2>
-    <span class="order-id">Order #{{ order.id }}</span>
+<div class="order-header">
+  <h2>Order Details</h2>
 
-    <span class="status" [class.placed]="order.status === 'Placed'"
-                        [class.cancelled]="order.status === 'Cancelled'">
-      {{ order.status }}
-    </span>
+  <div class="order-meta">
+    <span class="order-number">Order #{{ order.id }}</span>
+<span class="badge cancelled" *ngIf="order.status === 'Cancelled'">
+  Order Cancelled
+</span>
+
+
+    <!-- CANCEL ORDER BUTTON -->
+<button class="cancel-btn"
+        *ngIf="order.status !== 'Cancelled'"
+        (click)="cancelOrder()">
+  Cancel Order
+</button>
+
+
   </div>
+</div>
 
-  <!-- DELIVERY DETAILS -->
-  <div class="section">
-    <h3>Delivery Details</h3>
 
-    <div class="delivery-box">
-      <p><strong>Name:</strong> {{ order.checkout?.name }}</p>
-      <p><strong>Address:</strong> {{ order.checkout?.address }}</p>
-      <p><strong>cardNo:</strong> {{ order.checkout?.card }}</p>
-    <p><strong>Email:</strong> {{ order.checkout?.email }}</p>
-    </div>
-  </div>
+  <div class="order-content">
 
-  <!-- ORDERED ITEMS -->
-  <div class="section">
-    <h3>Ordered Products</h3>
-
-    <div class="items">
+    <!-- LEFT SECTION: ITEMS -->
+    <div class="items-section">
 
       <div class="item-card" *ngFor="let item of order.items">
         <img [src]="item.image" class="item-img">
 
-        <div class="info">
-          <h4>{{ item.name }}</h4>
-          <p class="qty">Quantity: {{ item.quantity }}</p>
-
-          <p class="price">
-            ₹{{ (item.price - (item.price * item.discount) / 100) * item.quantity }}
-          </p>
+        <div class="item-info">
+          <h3>{{ item.name }}</h3>
+          <p class="brand">{{ item.brand }}</p>
+          <p class="category">{{ item.category }}</p>
         </div>
+
+        <div class="item-price">
+          <p>₹{{ item.price }}</p>
+          <small>Qty: {{ item.quantity }}</small>
+        </div>
+      </div>
+
+  <!-- CUSTOMER DETAILS -->
+  <div class="customer-section">
+    <h3>Customer Details</h3>
+
+    <div class="customer-grid">
+
+      <div class="field">
+        <span>Name</span>
+        <p>{{ order.checkout?.name }}</p>
+      </div>
+
+      <div class="field">
+        <span>Email</span>
+        <p>{{ order.checkout?.email }}</p>
+      </div>
+
+      <div class="field">
+        <span>Address</span>
+        <p>{{ order.checkout?.address }}</p>
+      </div>
+
+      <div class="field">
+        <span>Payment</span>
+        <p>Online</p>
+      </div>
+
+      <div class="field">
+        <span>Status</span>
+        <p class="status paid">Paid</p>
       </div>
 
     </div>
   </div>
+ <div class="order-summary">
 
-  <!-- TOTAL -->
-  <div class="section total-box">
-    <h3>Total Amount</h3>
-    <p class="amount">₹{{ order.total }}</p>
-  </div>
+        <div class="row">
+          <span>Subtotal</span>
+          <span>₹{{ order.total }}</span>
+        </div>
 
-  <!-- CANCEL BUTTON -->
-  <button 
-    *ngIf="order.status === 'Placed'"
-    class="cancel-btn"
-    (click)="cancelOrder()">
-    Cancel Order
-  </button>
+        <div class="row">
+          <span>Shipping</span>
+          <span>₹0.00</span>
+        </div>
 
+        <div class="row">
+          <span>Tax</span>
+          <span>₹0.00</span>
+        </div>
+
+        <div class="row total">
+          <span>Total</span>
+          <span>₹{{ order.total }}</span>
+        </div>
+
+      </div>
+
+    </div>
 </div>

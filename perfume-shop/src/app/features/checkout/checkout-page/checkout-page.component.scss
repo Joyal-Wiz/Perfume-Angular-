@@ -1,0 +1,107 @@
+.checkout-wrapper {
+  padding: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.page-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.checkout-layout {
+  display: flex;
+  gap: 25px;
+}
+
+.left-panel {
+  flex: 2;
+}
+
+.right-panel {
+  flex: 1.3;
+}
+
+.section-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.section-card h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.place-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.place-btn:hover {
+  background: #333;
+}
+
+/* SUMMARY */
+.summary-card .summary-products {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.summary-img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.summary-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.summary-price {
+  font-weight: 600;
+}
+
+.divider {
+  height: 1px;
+  background: #eee;
+  margin: 10px 0;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.price-row.total {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.discount {
+  color: #d00000;
+}
