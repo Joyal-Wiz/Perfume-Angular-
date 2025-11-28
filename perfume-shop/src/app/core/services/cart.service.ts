@@ -14,21 +14,32 @@ export class CartService {
   }
 
   // add item to cart
-  addToCart(product: any) {
-    let cart = this.getCart();
+addToCart(product: any) {
 
-    // check if product already exists
-    const existing = cart.find((item: any) => item.id === product.id);
-
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-
-    // save back to local storage
-    localStorage.setItem('cart', JSON.stringify(cart));
+  if (product.stock <= 0) {
+    alert("This product is out of stock!");
+    return;
   }
+
+  let cart = this.getCart();
+  let existing = cart.find((item: any) => item.id === product.id);
+
+  if (existing) {
+    if (existing.quantity < product.stock) {
+      existing.quantity++;
+    } else {
+      alert("Reached maximum stock available!");
+    }
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+saveCart(cart: any[]) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
   updateQuantity(id: number, change: number) {
   let cart = this.getCart();
 

@@ -4,47 +4,69 @@ import { CartService } from 'src/app/core/services/cart.service';
 
 @Component({
   selector: 'app-cart-page',
-templateUrl: './cart-page.component.html',
-styleUrls: ['./cart-page.component.scss']
+  templateUrl: './cart-page.component.html',
+  styleUrls: ['./cart-page.component.scss']
 })
 export class CartPageComponent implements OnInit {
 
   cartItems: any[] = [];
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCart();
     console.log("Cart items:", this.cartItems);
   }
 
+  increase(item: any) {
+    if (item.quantity < item.stock) {
+      item.quantity++;
+      this.cartService.saveCart(this.cartItems);
+    }
+  }
+
+  decrease(item: any) {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.cartService.saveCart(this.cartItems);
+    }
+  }
+
+  removeItem(id: number) {
+    this.cartItems = this.cartItems.filter(i => i.id !== id);
+    this.cartService.saveCart(this.cartItems);
+  }
+
+  getSubtotal() {
+    return this.cartItems.reduce(
+      (sum, i) => sum + (i.price * i.quantity),
+      0
+    );
+  }
+
+  getTotalDiscount() {
+    return this.cartItems.reduce(
+      (sum, i) => sum + ((i.price * i.discount / 100) * i.quantity),
+      0
+    );
+  }
+
   getTotal() {
-    return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return this.getSubtotal() - this.getTotalDiscount();
   }
-buyNow() {
-  if (this.cartItems.length === 0) {
-    alert("Your cart is empty.");
-    return;
+
+  buyNow() {
+
+    if (this.cartItems.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    
+    this.router.navigate(['/checkout']);
   }
-  this.router.navigate(['/checkout']);
-}
-
-increase(item: any) {
-  this.cartService.updateQuantity(item.id, +1);
-  this.cartItems = this.cartService.getCart();
-}
-
-decrease(item: any) {
-  this.cartService.updateQuantity(item.id, -1);
-  this.cartItems = this.cartService.getCart();
-}
-
-remove(item: any) {
-  this.cartService.removeItem(item.id);
-  this.cartItems = this.cartService.getCart();
-}
-
-
-
 
 }

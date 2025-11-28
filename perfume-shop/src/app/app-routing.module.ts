@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './shared/components/home-page/home-page.component';
+import { AboutComponent } from './shared/components/about/about.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   path: 'checkout',
   loadChildren: () =>
     import('./features/checkout/checkout.module').then(m => m.CheckoutModule)
+},
+{
+  path: 'about',
+  component: AboutComponent
 },
 
   { path: '**', redirectTo: '' }

@@ -10,7 +10,8 @@ export class CheckoutPageComponent {
   checkoutData = {
     name: '',
     address: '',
-    card: ''
+    card: '',
+    email:''
   };
 
   order: any = null;
@@ -31,35 +32,33 @@ export class CheckoutPageComponent {
       return;
     }
 
-    const newOrder = {
-      id: Date.now(),
-      date: new Date().toLocaleString(),
-      items: cart,
-      total: cart.reduce((s: any, it: any) => s + it.price * it.quantity, 0),
-      status: 'Placed',
-      checkout: {
-        name: this.checkoutData.name,
-        address: this.checkoutData.address,
-        card: this.checkoutData.card
-      }
-    };
+const newOrder = {
+  id: Date.now(),
+  date: new Date().toLocaleString(),
+  items: cart,
+  total: cart.reduce((s: any, it: any) => s + it.price * it.quantity, 0),
+  status: 'Placed',
+  checkout: {
+    name: this.checkoutData.name,
+    address: this.checkoutData.address,
+    card: this.checkoutData.card,
+    email: this.checkoutData.email
+  }
+};
 
-    // persist
+
     const existing = JSON.parse(localStorage.getItem('orders') || '[]');
     existing.push(newOrder);
     localStorage.setItem('orders', JSON.stringify(existing));
 
-    // clear cart
     localStorage.removeItem('cart');
 
-    // set for modal and show
     this.order = newOrder;
     this.showModal = true;
   }
 
   onModalClose() {
     this.showModal = false;
-    // go to orders list
     this.router.navigate(['/orders']);
   }
 }

@@ -1,1 +1,44 @@
-<p>product-details works!</p>
+<div class="details-container" *ngIf="product">
+
+  <div class="left">
+    <img [src]="product.image" class="main-image">
+  </div>
+
+  <div class="right">
+
+    <h1>{{ product.name }}</h1>
+    <p class="brand">{{ product.brand }}</p>
+
+    <div class="price-box">
+      <span class="price">
+        ₹{{ (product.price - (product.price * product.discount / 100)).toFixed(2) }}
+      </span>
+
+      <span class="old-price">
+        ₹{{ product.price }}
+      </span>
+
+      <span class="discount-tag">
+        -{{ product.discount }}% OFF
+      </span>
+    </div>
+
+    <p class="category">
+      Category: <strong>{{ product.category }}</strong>
+    </p>
+
+    <p class="stock" [class.out]="product.stock === 0">
+      {{ product.stock === 0 ? "Out of Stock" : product.stock + " items left" }}
+    </p>
+
+    <button 
+      class="add-btn"
+      [disabled]="product.stock === 0"
+      (click)="addToCart()"
+    >
+      {{ product.stock === 0 ? "Out of Stock" : "Add to Cart" }}
+    </button>
+
+  </div>
+
+</div>

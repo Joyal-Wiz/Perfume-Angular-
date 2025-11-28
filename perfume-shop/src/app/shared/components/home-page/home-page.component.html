@@ -1,10 +1,51 @@
-<div class="home-container">
-
-  <div class="hero-section">
-    <h1>Discover Your Signature Scent</h1>
-    <p>Premium perfumes crafted to perfection.</p>
-
-    <a routerLink="/products" class="shop-btn">Shop Now</a>
+<div class="hero">
+  <div class="content">
+    <h1>Indulge in Timeless<br /><span>Luxury</span></h1>
+    <p>Explore 40+ premium fragrances curated for elegance.</p>
+    <button>Shop Now</button>
   </div>
 
+  <img src="assets/img/a.jpg" class="hero-img">
 </div>
+
+<div class="filter-bar">
+  <div class="filter-item">
+    <label>Brand</label>
+    <select>
+      <option>Select Brand</option>
+    </select>
+  </div>
+  <div class="filter-item">
+    <label>Item</label>
+    <select>
+      <option>Select Item</option>
+    </select>
+  </div>
+  <div class="filter-item">
+    <label>Price</label>
+    <select>
+      <option>Range</option>
+    </select>
+  </div>
+  <button class="search-btn">Search</button>
+</div>
+
+<section class="best-selling">
+  <h2>Best Selling Products</h2>
+
+  <div class="product-row">
+    <div class="product-card" *ngFor="let p of bestProducts">
+      <img [src]="p.image">
+      <h3>{{ p.name }}</h3>
+      <p class="price">${{ p.price }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="brands">
+  <h2>Discover Premium Brands</h2>
+
+  <div class="brand-row">
+    <span *ngFor="let b of brands">{{ b }}</span>
+  </div>
+</section>

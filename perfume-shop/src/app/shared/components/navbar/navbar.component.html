@@ -1,22 +1,31 @@
 <nav class="navbar">
-  <div class="navbar-container">
 
+  <!-- LEFT -->
+  <div class="nav-left">
     <div class="logo">Perfume Shop</div>
+  </div>
 
-    <ul class="nav-links">
+  <!-- CENTER -->
+  <div class="nav-center">
+    <ul>
       <li><a routerLink="/home">Home</a></li>
       <li><a routerLink="/products">Products</a></li>
+      <li><a routerLink="/about">About</a></li>
       <li><a routerLink="/cart">Cart</a></li>
-      <!-- <li><a routerLink="/auth/signin">Login</a></li>
-      <li><a routerLink="/auth/signup">Signup</a></li> -->
-      <li *ngIf="!isLoggedIn()"><a routerLink="/auth/signin">Login</a></li>
-      <li *ngIf="!isLoggedIn()"><a routerLink="/auth/signup">Signup</a></li>
       <li *ngIf="isLoggedIn()"><a routerLink="/orders">Orders</a></li>
-      <li *ngIf="isLoggedIn()" (click)="logout()" class="logout-btn">Logout</li>
-
-
-
     </ul>
-
   </div>
+
+  <!-- RIGHT -->
+  <div class="nav-right">
+    <ng-container *ngIf="!isLoggedIn()">
+      <a routerLink="/auth/signin">Login</a>
+      <a routerLink="/auth/signup" class="signup-btn">Signup</a>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn()">
+      <a (click)="logout()">Logout</a>
+    </ng-container>
+  </div>
+
 </nav>

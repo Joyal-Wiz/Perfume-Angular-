@@ -9,6 +9,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { RouterModule } from '@angular/router';
+import { AboutComponent } from './components/about/about.component';
 
 
 
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     PaymentConfirmedModalComponent,
     NotFoundComponent,
     DashboardComponent,
-    HomePageComponent
+    HomePageComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,

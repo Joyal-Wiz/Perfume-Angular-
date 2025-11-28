@@ -1,0 +1,76 @@
+.details-container {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.left .main-image {
+  width: 380px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+}
+
+.right {
+  flex: 1;
+}
+
+.brand {
+  font-size: 18px;
+  color: #666;
+}
+
+.price-box {
+  margin: 20px 0;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0c7a5c;
+}
+
+.old-price {
+  font-size: 16px;
+  text-decoration: line-through;
+  margin-left: 10px;
+  color: #aaa;
+}
+
+.discount-tag {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #e60023;
+}
+
+.category {
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+.stock {
+  font-size: 18px;
+}
+
+.stock.out {
+  color: red;
+  font-weight: bold;
+}
+
+.add-btn {
+  padding: 12px 25px;
+  background: #0c7a5c;
+  color: white;
+  border: none;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
