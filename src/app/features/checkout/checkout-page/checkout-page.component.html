@@ -4,10 +4,9 @@
 
   <div class="checkout-layout">
 
-    <!-- LEFT SIDE — ADDRESS + PAYMENT -->
+
     <div class="left-panel">
 
-      <!-- DELIVERY DETAILS -->
       <div class="section-card">
         <h3>Delivery Address</h3>
 
@@ -29,10 +28,8 @@
     </div>
 
 
-    <!-- RIGHT SIDE — ORDER SUMMARY -->
     <div class="right-panel">
 
-      <!-- ORDER SUMMARY -->
       <div class="section-card summary-card">
         <h3>Order Summary</h3>
 
@@ -65,7 +62,7 @@
           <strong>₹{{ getTotal() }}</strong>
         </div>
 
-        <!-- PAYMENT BUTTON MOVED HERE -->
+
         <button (click)="startPayment()" class="pay-now-btn">
           Pay
         </button>
@@ -77,9 +74,10 @@
   </div>
 </div>
 
-<!-- Payment Success Modal -->
+
 <app-payment-confirmed-modal
   *ngIf="showModal"
   [order]="order"
   (close)="onModalClose()">
 </app-payment-confirmed-modal>
+

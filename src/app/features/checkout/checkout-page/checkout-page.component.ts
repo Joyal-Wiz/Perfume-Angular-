@@ -56,14 +56,25 @@ export class CheckoutPageComponent implements OnInit {
   }
 
 startPayment() {
+
+  // 1️⃣ Clean the rupee amount up to 2 decimals
+  const cleanRupees = Number(this.totalAmount.toFixed(2));
+
+  // 2️⃣ Convert to paise (INTEGER)
+  const amountInPaise = Math.round(cleanRupees * 100);
+
+  console.log("Paying amount in paise:", amountInPaise);
+
   this.paymentService.pay(
-    this.totalAmount,
+    amountInPaise,   // NOTE: sending paise, not rupees anymore
 
     // SUCCESS
     () => {
       this.ngZone.run(() => {
         this.createOrder();
-        this.cd.detectChanges();   
+        this.showModal = true;
+        this.cd.detectChanges();
+        console.log("Modal triggered");
       });
     },
 
@@ -79,11 +90,19 @@ startPayment() {
 
 
 
+
+
 createOrder() {
   const newOrder = {
     id: Date.now(),
     date: new Date().toLocaleString(),
-    items: this.cartItems,
+
+    // ADD finalPrice HERE
+    items: this.cartItems.map(i => ({
+      ...i,
+      finalPrice: ((i.price - (i.price * i.discount / 100)) * i.quantity).toFixed(2)
+    })),
+
     total: this.totalAmount,
     status: 'Placed',
     checkout: {
@@ -103,6 +122,7 @@ createOrder() {
   this.order = newOrder;
   this.showModal = true;
 }
+
 
 
   onModalClose() {

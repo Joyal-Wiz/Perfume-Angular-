@@ -10,39 +10,30 @@ export class PaymentService {
 
   constructor() {}
 
-  pay(amount: number, onSuccess: Function, onFailure?: Function) {
+  pay(amountInPaise: number, onSuccess: Function, onFailure?: Function) {
 
-    const options = {
-      key: environment.razorpayKeyId,   // ✔ correct usage
-      amount: amount * 100,             // convert ₹ to paise
-      currency: 'INR',
-      name: 'Dar Al Itr',
-      description: 'Perfume Payment',
-      image: '/assets/img/logo.png',
+  const options = {
+    key: environment.razorpayKeyId,
+    amount: amountInPaise,   // paise, not rupees
+    currency: 'INR',
+    name: 'Dar Al Itr',
+    description: 'Perfume Payment',
+    image: '/assets/img/logo.png',
 
-      handler: (response: any) => {
-        console.log("Payment Success:", response);
-        onSuccess(response);
-      },
+    handler: (response: any) => {
+      console.log("Payment Success:", response);
+      onSuccess(response);
+    }
+  };
 
-      prefill: {
-        name: "Joyal Jose",
-        email: "joyal@example.com",
-        contact: "9999999999"
-      },
+  const razorpay = new Razorpay(options);
 
-      theme: {
-        color: '#6c4eff'
-      }
-    };
+  razorpay.on('payment.failed', (err: any) => {
+    console.log("Payment Failed:", err);
+    if (onFailure) onFailure(err);
+  });
 
-    const razorpay = new Razorpay(options);
+  razorpay.open();
+}
 
-    razorpay.on('payment.failed', (err: any) => {
-      console.log("Payment Failed:", err);
-      if (onFailure) onFailure(err);
-    });
-
-    razorpay.open();
-  }
 }
