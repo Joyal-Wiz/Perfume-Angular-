@@ -1,0 +1,21 @@
+<div class="toast-wrapper" *ngIf="showToast">
+  
+  <!-- Floating perfume mist -->
+  <div class="toast-mist"></div>
+
+  <!-- TOAST BOX -->
+  <div class="toast-box" [ngClass]="type">
+    
+    <div class="icon-area">
+      <span *ngIf="type === 'success'" class="icon success-icon">✔</span>
+      <span *ngIf="type === 'error'" class="icon error-icon">✖</span>
+      <span *ngIf="type === 'warning'" class="icon warn-icon">⚠</span>
+    </div>
+
+    <span class="toast-msg">{{ message }}</span>
+
+    <!-- PREMIUM RIGHT GLASS PANEL -->
+    <div class="right-glass"></div>
+
+  </div>
+</div>

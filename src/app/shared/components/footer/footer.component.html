@@ -1,0 +1,40 @@
+<footer class="lux-footer">
+  
+  <!-- Background Mist -->
+  <div class="footer-mist"></div>
+
+  <div class="footer-content">
+
+    <!-- LEFT: BRAND -->
+    <div class="footer-brand">
+      <h2 class="logo">Perfume Shop</h2>
+      <p>Your destination for luxury fragrances.</p>
+    </div>
+
+    <!-- CENTER: QUICK LINKS -->
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="/products">Products</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/cart">Cart</a></li>
+        <li *ngIf="isLoggedIn()"><a routerLink="/orders">Orders</a></li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: CONTACT -->
+    <div class="footer-section">
+      <h3>Contact</h3>
+      <p>Email: support@perfume-shop.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Location: Kochi, India</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © {{ currentYear }} Perfume Shop – All Rights Reserved.
+  </div>
+
+</footer>

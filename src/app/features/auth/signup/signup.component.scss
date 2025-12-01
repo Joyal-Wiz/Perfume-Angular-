@@ -1,0 +1,417 @@
+.signup-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: 
+    linear-gradient(135deg, rgba(250, 249, 255, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%),
+    url('/assets/img/bg1.jpg') center/cover;
+  position: relative;
+  overflow: hidden;
+ 
+}
+
+@keyframes floatShape {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translate(50px, -50px) rotate(120deg);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate(-30px, 30px) rotate(240deg);
+    opacity: 0.5;
+  }
+}
+
+// Floating particles
+.signup-container {
+  .particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    
+    &:nth-child(1) {
+      width: 10px;
+      height: 10px;
+      top: 20%;
+      left: 10%;
+      animation: particle 8s infinite ease-in-out;
+    }
+    
+    &:nth-child(2) {
+      width: 15px;
+      height: 15px;
+      top: 60%;
+      right: 15%;
+      animation: particle 10s infinite ease-in-out 2s;
+    }
+    
+    &:nth-child(3) {
+      width: 8px;
+      height: 8px;
+      bottom: 30%;
+      left: 20%;
+      animation: particle 12s infinite ease-in-out 4s;
+    }
+  }
+}
+
+@keyframes particle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-100px) scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+.signup-card {
+  width: 420px;
+  padding: 0px 57px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(106, 90, 205, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: cardEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  // Top highlight
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    border-radius: 2px;
+  }
+  
+  // Shimmer effect
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    animation: shimmer 6s infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(40px) rotateX(20deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(50%, 50%) rotate(360deg);
+  }
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 32px;
+  color: #000000a4;
+  letter-spacing: -0.5px;
+  animation: titleGlow 3s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.169),
+      0 0 20px rgba(255, 218, 9, 0.368);
+  }
+  50% {
+    text-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(226, 156, 43, 0.653),
+      0 0 40px rgba(255, 251, 0, 0.5);
+  }
+}
+
+.subtitle {
+  margin-bottom: 35px;
+  color: rgba(0, 0, 0, 0.95);
+  font-size: 15px;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease 0.2s backwards;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease backwards;
+  
+  &:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+  
+  &:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  
+  &:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: rgb(107 85 51);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+input {
+    width: 92%;
+    padding: 10px 0px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.212);
+    outline: none;
+    font-size: 15px;
+    background: rgb(255 255 255 / 0%);
+    backdrop-filter: blur(10px);
+    color: #000000;
+    transition: all 0.4s 
+cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  
+  &::placeholder {
+    color: rgba(18, 5, 5, 0.251);
+    
+  }
+  
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 8px 24px rgba(106, 90, 205, 0.3),
+      0 0 0 4px rgba(255, 255, 255, 0.1),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px) scale(1.01);
+  }
+  
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  // Autofill styling
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: #000000a9;
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.2) inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+.btn {
+width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, rgb(226 183 43) 0%, rgb(0 0 0 / 45%) 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.4s 
+cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgb(255 255 255 / 40%), 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    z-index: 1;
+    animation: _ngcontent-ng-c3017612372_fadeInUp 0.8s 
+ease 0.6s backwards;
+  
+  // Shine effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.6s;
+  }
+  
+  // Ripple effect container
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover {
+    background: linear-gradient(135deg, #0000007a 0%, #de9c29de  100%);
+    transform: translateY(-4px) scale(1.02);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-2px) scale(0.98);
+    
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
+
+.link-text {
+  margin-top: 28px;
+  font-size: 14px;
+  color: rgba(5, 2, 2, 0.9);
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.8s ease 0.7s backwards;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  
+  a {
+    color: #00000090;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 2px 6px;
+    border-radius: 6px;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #000000, #cdc25a);
+      transition: width 0.4s ease;
+      box-shadow: 0 0 8px rgba(214, 204, 224, 0.6);
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover {
+      color: #07020288;
+      text-shadow: 0 0 12px rgba(137, 43, 226, 0.454);
+      
+      &::before {
+        width: 100%;
+      }
+      
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .signup-card {
+    width: 90%;
+    padding: 40px 30px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+  }
+}
+
+// Glass reflection effect
+.signup-card {
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.25),
+      0 4px 12px rgba(106, 90, 205, 0.2),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  }
+}

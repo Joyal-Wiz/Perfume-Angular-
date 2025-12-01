@@ -1,0 +1,72 @@
+<!-- WISHLIST HEADER -->
+<div class="wishlist-header">
+  <h1>Your Wishlist</h1>
+  <p class="subtitle">Curated Fragrances</p>
+</div>
+
+<div class="product-grid">
+
+  <div class="card" *ngFor="let p of products">
+    
+    <!-- ❤️ WISHLIST BUTTON -->
+    <button 
+      class="wishlist-btn"
+      (click)="toggleWishlist(p.id); $event.stopPropagation()"
+    ><img src="assets/img/remove.png" style="height: 40px;" alt=""><i 
+        class="fa" 
+        [ngClass]="wishlistService.isInWishlist(p.id) ? 'fa-heart' : 'fa-heart-o'"
+      ></i>
+    </button>
+
+    <!-- DISCOUNT BADGE -->
+    <div class="discount-badge" *ngIf="p.discount">
+      {{ p.discount }}% OFF
+    </div>
+
+    <!-- CLICKABLE PRODUCT BLOCK -->
+    <div class="click-area" [routerLink]="['/products/details', p.id]">
+
+      <img [src]="p.image" class="image">
+
+      <h3 class="title">{{ p.name }}</h3>
+      <p class="brand">{{ p.brand }}</p>
+
+      <div class="price-box">
+        <span class="price">
+          ₹{{ (p.price - (p.price * p.discount / 100)).toFixed(2) }}
+        </span>
+
+        <span class="old-price" *ngIf="p.discount">
+          ₹{{ p.price }}
+        </span>
+      </div>
+
+      <p class="stock" [class.low]="p.stock <= 3">
+        Stock: {{ p.stock }}
+      </p>
+    </div>
+
+    <!-- ADD TO CART BUTTON -->
+    <button 
+      class="add-btn"
+      [disabled]="p.stock === 0"
+      (click)="addProduct(p); $event.stopPropagation()"
+    >
+      {{ p.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- EMPTY WISHLIST -->
+<div class="no-results" *ngIf="products.length === 0">
+  <div class="mist"></div>
+
+  <div class="no-box">
+    <h1>💔 No Wishlist Items</h1>
+    <p>You haven't added any perfumes to your wishlist yet.</p>
+    <button routerLink="/products">Browse Products</button>
+  </div>
+</div>

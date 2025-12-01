@@ -1,0 +1,122 @@
+  <div class="filters-container" style="margin-top: 30px;">
+    <div class="header">
+      <h1>L'essence Luxe</h1>
+      <p>Curated Fragrances</p>
+    </div>
+
+
+    <!-- 🌟 GLASS SEARCH BAR -->
+    <div class="glass-search">
+      <i class="ph ph-magnifying-glass search-icon"><img src="assets/img/search.png" style="height: 30px; " alt=""></i>
+      <input 
+        type="text"
+        placeholder="Search premium perfumes..."
+        [(ngModel)]="searchText"
+        (input)="applyFilters()"
+      />
+    </div>
+
+    <!-- 🌟 CATEGORY FILTER -->
+    <div class="glass-dropdown">
+      <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+        <option value="All">All Categories</option>
+        <option value="Men">Men</option>
+        <option value="Women">Women</option>
+        <option value="Unisex">Unisex</option>
+        <option value="Oud">Oud</option>
+        <option value="Fresh">Fresh</option>
+        <option value="Luxury">Luxury</option>
+      </select>
+    </div>
+
+    <!-- 🌟 BRAND FILTER -->
+    <div class="glass-dropdown">
+      <select [(ngModel)]="selectedBrand" (change)="applyFilters()">
+        <option value="All">All Brands</option>
+        <option *ngFor="let b of brands" [value]="b">{{ b }}</option>
+      </select>
+    </div>
+
+    <!-- 🌟 PRICE SORT -->
+    <div class="glass-dropdown">
+      <select [(ngModel)]="priceSort" (change)="applyFilters()">
+        <option value="none">Sort by Price</option>
+        <option value="low">Low → High</option>
+        <option value="high">High → Low</option>
+      </select>
+    </div>
+
+  </div>
+
+
+  <!-- PRODUCT GRID -->
+  <div class="product-grid">
+
+    <div class="card" *ngFor="let p of paginatedProducts">
+      
+      <!-- ❤️ WISHLIST BUTTON -->
+      <button 
+        class="wishlist-btn"
+        [class.active]="wishlistService.isInWishlist(p.id)"
+        (click)="toggleWishlist(p.id); $event.stopPropagation()"
+      >
+        <img src="assets/img/love2.png" class="wishlist-icon" alt="heart">
+      </button>
+
+      <!-- DISCOUNT BADGE -->
+      <div class="discount-badge" *ngIf="p.discount">
+        {{ p.discount }}% OFF
+      </div>
+
+      <div class="click-area" [routerLink]="['/products/details', p.id]">
+        <img [src]="p.image" class="image">
+        <h3 class="title">{{ p.name }}</h3>
+        <p class="brand">{{ p.brand }}</p>
+
+        <div class="price-box">
+          <span class="price">
+            ₹{{ (p.price - (p.price * p.discount / 100)).toFixed(2) }}
+          </span>
+          <span class="old-price" *ngIf="p.discount">₹{{ p.price }}</span>
+        </div>
+
+        <p class="stock" [class.low]="p.stock <= 3">Stock: {{ p.stock }}</p>
+      </div>
+
+      <button 
+        class="add-btn"
+        [disabled]="p.stock === 0"
+        (click)="addProduct(p); $event.stopPropagation()"
+      >
+        {{ p.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+  <!-- NO RESULTS PAGE -->
+  <div class="no-results" *ngIf="filteredProducts.length === 0">
+    
+    <div class="mist"></div>
+
+    <div class="no-box">
+      <h1>😕 No Products Found</h1>
+
+      <p>Your search or filters didn't match any perfumes.</p>
+
+      <button routerLink="/products">Reset Filters</button>
+    </div>
+
+  </div>
+
+
+  <!-- PAGINATION -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+    <span>Page {{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>

@@ -1,0 +1,85 @@
+<div class="checkout-wrapper">
+
+  <h2 class="page-title">Checkout</h2>
+
+  <div class="checkout-layout">
+
+    <!-- LEFT SIDE — ADDRESS + PAYMENT -->
+    <div class="left-panel">
+
+      <!-- DELIVERY DETAILS -->
+      <div class="section-card">
+        <h3>Delivery Address</h3>
+
+        <form #form="ngForm">
+          <label>Full Name</label>
+          <input type="text" name="name" required [(ngModel)]="checkoutData.name"/>
+
+          <label>Email</label>
+          <input type="email" name="email" required [(ngModel)]="checkoutData.email">
+
+          <label>Address</label>
+          <textarea name="address" required [(ngModel)]="checkoutData.address"></textarea>
+
+          <label>Card Number</label>
+          <input type="text" name="card" required [(ngModel)]="checkoutData.card"/>
+        </form>
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE — ORDER SUMMARY -->
+    <div class="right-panel">
+
+      <!-- ORDER SUMMARY -->
+      <div class="section-card summary-card">
+        <h3>Order Summary</h3>
+
+        <div class="summary-products" *ngFor="let item of cartItems">
+          <img [src]="item.image" class="summary-img" />
+          <div class="summary-info">
+            <p>{{ item.name }}</p>
+            <small>{{ item.brand }}</small>
+            <small>Qty: {{ item.quantity }}</small>
+          </div>
+          <div class="summary-price">
+            ₹{{ (item.price - (item.price * item.discount/100)).toFixed(2) }}
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="price-row">
+          <span>Subtotal</span>
+          <span>₹{{ getSubtotal() }}</span>
+        </div>
+
+        <div class="price-row">
+          <span>Discount</span>
+          <span class="discount">-₹{{ getTotalDiscount() }}</span>
+        </div>
+
+        <div class="price-row total">
+          <strong>Total Payable</strong>
+          <strong>₹{{ getTotal() }}</strong>
+        </div>
+
+        <!-- PAYMENT BUTTON MOVED HERE -->
+        <button (click)="startPayment()" class="pay-now-btn">
+          Pay
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Payment Success Modal -->
+<app-payment-confirmed-modal
+  *ngIf="showModal"
+  [order]="order"
+  (close)="onModalClose()">
+</app-payment-confirmed-modal>

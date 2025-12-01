@@ -1,0 +1,33 @@
+<div class="signup-container">
+  <div class="signup-card">
+
+    <h2>Create Account</h2>
+    <p class="subtitle">Join our perfume store!</p>
+
+    <form #form="ngForm" (ngSubmit)="onSignup()">
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" name="name" [(ngModel)]="formData.name" required placeholder="Full Name" />
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" [(ngModel)]="formData.email" required placeholder="Email"/>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="password" [(ngModel)]="formData.password" required placeholder="Password"/>
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <p class="link-text">
+      Already have an account?
+      <a routerLink="/auth/signin">Sign In</a>
+    </p>
+
+  </div>
+</div>

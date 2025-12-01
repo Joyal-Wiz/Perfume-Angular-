@@ -1,0 +1,439 @@
+<!-- HTML Template -->
+<div class="order-container" *ngIf="order">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="#">Home</a>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+    <a href="#">Orders</a>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+    <span>Order #{{ order.id }}</span>
+  </div>
+
+  <!-- ORDER HEADER -->
+  <div class="order-header">
+    <div class="header-left">
+      <div class="title-section">
+        <h2>Order Details</h2>
+        <div class="order-badges">
+          <span class="order-number">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            #{{ order.id }}
+          </span>
+          <span class="order-date">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            {{ order.date || 'Nov 28, 2025' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <span class="badge" [ngClass]="order.status.toLowerCase()" *ngIf="order.status === 'Cancelled'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+        Order Cancelled
+      </span>
+
+      <span class="badge" [ngClass]="order.status.toLowerCase()" *ngIf="order.status === 'Placed'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Order Placed
+      </span>
+
+      <span class="badge" [ngClass]="order.status.toLowerCase()" *ngIf="order.status === 'Shipped'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        Shipped
+      </span>
+
+      <button class="track-btn" *ngIf="order.status !== 'Cancelled'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Track Order
+      </button>
+
+      <button class="cancel-btn"
+              *ngIf="order.status !== 'Cancelled'"
+              (click)="cancelOrder()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+        Cancel Order
+      </button>
+    </div>
+  </div>
+
+  <!-- ORDER TIMELINE -->
+  <div class="order-timeline" *ngIf="order.status !== 'Cancelled'">
+    <div class="timeline-item completed">
+      <div class="timeline-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="timeline-content">
+        <h4>Order Placed</h4>
+        <p>Your order has been confirmed</p>
+        <span class="time">Nov 28, 2:30 PM</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" [class.completed]="order.status === 'Shipped' || order.status === 'Delivered'">
+      <div class="timeline-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+        </svg>
+      </div>
+      <div class="timeline-content">
+        <h4>Shipped</h4>
+        <p>Package on the way</p>
+        <span class="time">Expected: Nov 30</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" [class.completed]="order.status === 'Delivered'">
+      <div class="timeline-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="timeline-content">
+        <h4>Delivered</h4>
+        <p>Package delivered successfully</p>
+        <span class="time">Expected: Dec 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-content">
+
+    <!-- LEFT SECTION: ITEMS -->
+    <div class="items-section">
+
+      <!-- Items Header -->
+      <div class="section-header">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h3>Order Items</h3>
+        <span class="item-count">{{ order.items.length }} items</span>
+      </div>
+
+      <!-- Item Cards -->
+      <div class="item-card" *ngFor="let item of order.items">
+        <div class="item-image-wrapper">
+          <img [src]="item.image" class="item-img" alt="product">
+          <div class="image-overlay">
+            <button class="quick-view">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="item-info">
+          <div class="item-details">
+            <h3>{{ item.name }}</h3>
+            <p class="brand">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 7h-9M14 3v4M6 21V10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v11"/>
+              </svg>
+              {{ item.brand }}
+            </p>
+            <div class="item-meta">
+              <span class="category-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+                {{ item.category }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-price">
+          <div class="price-wrapper">
+            <span class="price-label">Price</span>
+            <p class="price">₹{{ item.price.toFixed(2) }}</p>
+          </div>
+          <div class="quantity-wrapper">
+            <span class="qty-label">Quantity</span>
+            <span class="qty-badge">{{ item.quantity }}</span>
+          </div>
+          <div class="total-wrapper">
+            <span class="total-label">Total</span>
+            <p class="item-total">₹{{ (item.price * item.quantity).toFixed(2) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h3 class="summary-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          Order Summary
+        </h3>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ order.total.toFixed(2) }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping Fee</span>
+          <span class="free">FREE</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Tax (GST 18%)</span>
+          <span>₹{{ (order.total * 0.18).toFixed(2) }}</span>
+        </div>
+
+        <div class="summary-row discount">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+            Discount (10%)
+          </span>
+          <span class="discount-value">-₹{{ (order.total * 0.1).toFixed(2) }}</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total">
+          <span>Grand Total</span>
+          <span>₹{{ (order.total * 1.08).toFixed(2) }}</span>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="payment-method">
+          <div class="payment-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div class="payment-info">
+            <span class="payment-label">Payment Method</span>
+            <p class="payment-type">Credit Card •••• 4242</p>
+          </div>
+          <span class="payment-status paid">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Paid
+          </span>
+        </div>
+      </div>
+
+      <!-- Customer Details -->
+      <div class="customer-section">
+        <h3 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Customer Information
+        </h3>
+
+        <div class="customer-grid">
+          <div class="field-card">
+            <div class="field-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="field-content">
+              <span class="field-label">Full Name</span>
+              <p class="field-value">{{ order.checkout?.name }}</p>
+            </div>
+          </div>
+
+          <div class="field-card">
+            <div class="field-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="field-content">
+              <span class="field-label">Email Address</span>
+              <p class="field-value">{{ order.checkout?.email}}</p>
+            </div>
+          </div>
+
+          <div class="field-card">
+            <div class="field-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="field-content">
+              <span class="field-label">Phone Number</span>
+              <p class="field-value">{{ order.checkout?.phone || '+91 98765 43210' }}</p>
+            </div>
+          </div>
+
+          <div class="field-card full-width">
+            <div class="field-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="field-content">
+              <span class="field-label">Delivery Address</span>
+              <p class="field-value">{{ order.checkout?.address || '123 Main Street, Apartment 4B, New York, NY 10001, United States' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SECTION: ACTIVITY & HELP -->
+    <div class="right-section">
+
+      <!-- Help Card -->
+      <div class="help-card">
+        <div class="help-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h3>Need Help?</h3>
+        <p>Our customer support team is here to assist you with your order</p>
+        <button class="contact-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+          Contact Support
+        </button>
+      </div>
+
+      <!-- Order Actions Card -->
+      <div class="actions-card">
+        <h3 class="actions-title">Quick Actions</h3>
+        <div class="action-list">
+          <button class="action-item">
+            <div class="action-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
+            <div class="action-content">
+              <span class="action-label">Download Invoice</span>
+              <span class="action-desc">PDF format</span>
+            </div>
+          </button>
+
+          <button class="action-item">
+            <div class="action-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="17 1 21 5 17 9"/>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                <polyline points="7 23 3 19 7 15"/>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </div>
+            <div class="action-content">
+              <span class="action-label">Return Items</span>
+              <span class="action-desc">30 days policy</span>
+            </div>
+          </button>
+
+          <button class="action-item">
+            <div class="action-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="action-content">
+              <span class="action-label">Rate & Review</span>
+              <span class="action-desc">Share feedback</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Delivery Info Card -->
+      <div class="delivery-card">
+        <div class="delivery-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <h4>Delivery Information</h4>
+        </div>
+        <div class="delivery-info">
+          <div class="delivery-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Free standard shipping</span>
+          </div>
+          <div class="delivery-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Estimated delivery: 3-5 days</span>
+          </div>
+          <div class="delivery-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Track package anytime</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

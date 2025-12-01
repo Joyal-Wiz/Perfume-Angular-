@@ -1,0 +1,56 @@
+<nav class="lux-navbar" [class.shrink]="isShrunk">
+
+  <!-- LEFT: LOGO -->
+  <div class="nav-left">
+    <div class="logo">
+      <i class="ph ph-spray-bottle logo-icon">Dar-Al-Itr</i></div>
+  </div>
+
+  <!-- CENTER MENU -->
+  <div class="nav-center">
+    <ul class="nav-menu glass-pill">
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="/products">Products</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li *ngIf="isLoggedIn()"><a routerLink="/orders">Orders</a></li>
+    </ul>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="nav-right">
+
+    <a routerLink="/wishlist" class="wishlist-nav">
+  <div class="icon-wrapper">
+    <img src="assets/img/love.png" style="height: 27px;" alt="" class="wishlist-icon" />
+    
+    <span class="count-badge" *ngIf="wishlistService.getWishlist().length > 0">
+      {{ wishlistService.getWishlist().length }}
+    </span>
+  </div>
+</a>
+
+
+
+    <!-- CART ICON -->
+    <div class="cart-icon" routerLink="/cart">
+      <i class="ph ph-shopping-cart cart-symbol"><img src="assets/img/cart1.png" style="height: 27px;" alt=""></i>
+      <span class="cart-badge">{{ cartCount }}</span>
+    </div>
+    
+
+    <!-- USER AUTH -->
+    <ng-container *ngIf="!isLoggedIn()">
+      <a routerLink="/auth/signin" class="login-btn">Login</a>
+      <a routerLink="/auth/signup" class="signup-btn">Signup</a>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedIn()">
+      <a class="logout-btn" (click)="logout()">Logout</a>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn()">
+      <a routerLink="/dashboard"><i><img src="assets/img/user.png" style="height: 35px;" alt=""></i></a>
+    </ng-container>
+
+  </div>
+
+</nav>

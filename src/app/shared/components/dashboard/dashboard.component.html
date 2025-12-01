@@ -1,0 +1,63 @@
+<div class="dashboard-wrapper">
+
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- USER CARD -->
+    <div class="user-card">
+      <img src="assets/img/user1.jpg" class="avatar">
+      <div class="user-info">
+        <h3>{{ user?.name }}</h3>
+        <p>{{ user?.email }}</p>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="menu">
+      <button routerLink="/dashboard" class="active">👤 Profile</button>
+      <button routerLink="">📦 My Orders</button>
+      <button routerLink="/cart">🛒 My Cart</button>
+      <button routerLink="/products">🛍 Shop More</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE CONTENT -->
+  <div class="content">
+
+    <!-- EMPTY STATE -->
+    <div class="empty" *ngIf="userOrderedItems.length === 0">
+      <img src="assets/img/empty-orders.png" alt="">
+      <p>No orders yet!</p>
+    </div>
+
+<!-- RIGHT SIDE: ORDER HISTORY -->
+<div class="order-history-section">
+
+  <h2 class="section-title">Your previous Order's</h2>
+
+  <div class="orders-grid">
+    <div class="ordered-item" *ngFor="let item of userOrderedItems">
+      
+      <div class="mist"></div>
+
+      <img class="item-img" [src]="item.image">
+
+      <div class="item-info">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.brand }}</p>
+        <p>Qty: {{ item.quantity }}</p>
+        <p class="price">₹{{ item.finalPrice }}</p>
+      </div>
+
+      <span class="status delivered">Delivered</span>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+  </div>
+</div>

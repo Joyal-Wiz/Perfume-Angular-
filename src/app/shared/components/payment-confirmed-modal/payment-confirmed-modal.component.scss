@@ -1,0 +1,137 @@
+/* BACKDROP */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* MODAL BOX */
+.modal-box {
+  width: 360px;
+  padding: 40px 35px;
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(230, 200, 150, 0.5);
+
+  box-shadow: 0 15px 40px rgba(190, 150, 90, 0.25);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  animation: slideUp 0.5s ease-out;
+}
+
+/* GOLDEN GLOW BEHIND */
+.glow-circle {
+  position: absolute;
+  top: -60px;
+  left: -40px;
+  width: 250px;
+  height: 250px;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 221, 160, 0.7) 0%,
+    rgba(255, 220, 170, 0.25) 45%,
+    transparent 70%
+  );
+
+  filter: blur(30px);
+  animation: glowFloat 4s infinite ease-in-out;
+  z-index: -1;
+}
+
+/* TICK ANIMATION */
+.tick-wrapper {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 15px;
+}
+
+.tick-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tick-circle {
+  fill: none;
+  stroke: #1ba548;     /* premium green */
+  stroke-width: 4;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: drawCircle 0.6s ease-out forwards;
+}
+
+.tick-check {
+  stroke: #1ba548;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: drawCheck 0.4s 0.55s ease-out forwards;
+}
+
+/* TITLE */
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #3a2f1f;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+/* BUTTON */
+.continue-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #f3d7a6, #e5b86d);
+  color: #3c2e1d;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(180, 140, 80, 0.3);
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffdfb3, #e5bf7a);
+}
+
+/* ANIMATIONS */
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; } 
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glowFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.08); }
+}
