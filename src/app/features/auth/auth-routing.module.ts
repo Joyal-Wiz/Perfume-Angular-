@@ -8,10 +8,11 @@ const routes: Routes = [
   {path:'signin',component:SigninComponent},
   {path:'signup',component:SignupComponent},
    { path: 'forgot-password', component: ForgotPasswordComponent },
-   {
-  path: 'forgot-password',
-  component: ForgotPasswordComponent
-},
+{
+  path: 'reset-password',
+  component: ResetPasswordComponent
+}
+,
 {
   path: 'reset-password',
   component: ResetPasswordComponent

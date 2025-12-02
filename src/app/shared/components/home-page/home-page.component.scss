@@ -225,16 +225,35 @@
         }
 
         /* Right Side Floating Text */
-        .hero-right-text {
-            position: absolute;
-            top: 50%;
-            right: 190px;
-            transform: translateY(-50%);
-            z-index: 2;
-            text-align: right;
-            width: 500px;
-            animation: fadeInUp 1s ease-out 0s backwards;
-        }
+.hero-right-text {             
+    position: absolute;             
+    top: 50%;             
+    right: 190px;             
+    transform: translateY(-50%);             
+    z-index: 2;             
+    text-align: right;             
+    width: 500px;             
+    opacity: 0;
+    animation: smoothUp 2.2s ease-out forwards;
+}
+
+@keyframes smoothUp {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+        filter: blur(4px);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(-55%); 
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-50%);
+        filter: blur(0);
+    }
+}
+
 
         .hero-right-text .tagline {
             font-family: 'Playfair Display', serif;
@@ -258,7 +277,7 @@
         .hero-right-text .subtitle {
             font-size: 13px;
             color: rgba(102, 102, 102, 0.9);
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             font-weight: 500;
         }

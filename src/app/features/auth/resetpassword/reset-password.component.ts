@@ -27,37 +27,35 @@ export class ResetPasswordComponent {
   }
 
   resetPassword() {
-    if (!this.newPassword || !this.confirmPassword) {
-      this.toast.show("Please fill all fields", "error");
-      return;
-    }
-
-    if (this.newPassword !== this.confirmPassword) {
-      this.toast.show("Passwords do not match!", "error");
-      return;
-    }
-
-    // Load users list
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    // Update the user
-    const updatedUsers = users.map((u: any) => {
-      if (u.email === this.email) {
-        return { ...u, password: this.newPassword };
-      }
-      return u;
-    });
-
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-    // Clear temporary reset email
-    localStorage.removeItem("reset_email");
-
-    this.toast.show("Password reset successfully!", "success");
-    
-    // Auto redirect after 2 seconds
-    setTimeout(() => {
-      this.router.navigate(['/auth/signin']);
-    }, 1500);
+  if (!this.newPassword || !this.confirmPassword) {
+    this.toast.show("Please fill all fields", "error");
+    return;
   }
+
+  if (this.newPassword !== this.confirmPassword) {
+    this.toast.show("Passwords do not match!", "error");
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+  const userIndex = users.findIndex((u: any) => u.email === this.email);
+
+  if (userIndex === -1) {
+    this.toast.show("User does not exist!", "error");
+    return;
+  }
+
+  users[userIndex].password = this.newPassword;
+
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.removeItem("reset_email");
+
+  this.toast.show("Password reset successfully!", "success");
+
+  setTimeout(() => {
+    this.router.navigate(['/auth/signin']);
+  }, 1200);
+}
+
 }

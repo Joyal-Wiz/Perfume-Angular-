@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap");
 
 /* GENERAL */
 * {
@@ -72,33 +72,44 @@ margin: -2px;
 }
 
 /* LOGO - Luxury Typography */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap");
+
 .logo {
-  font-size: 32px;
-  font-weight: 600;
-  font-family: "Cinzel", serif;
-  background: linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 50%, #1a1a1a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   display: flex;
   align-items: center;
   gap: 10px;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 1;
 }
 
-.logo::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #000000, transparent);
-  
+.brand-text {
+     font-family: "Cinzel Decorative", serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #554b2a 0%, #febe00 40%, #a77705c9 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 3px 10px rgb(0 0 0 / 0%);
 }
+
+.logo-icon {
+  font-size: 34px;
+  background: linear-gradient(135deg, #d4af37 0%, #ffecb3 40%, #b8860b 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+
+
+// .logo::after {
+//   content: '';
+//   position: absolute;
+//   bottom: -4px;
+//   left: 0;
+//   width: 0;
+//   height: 2px;
+//   background: linear-gradient(90deg, transparent, #f21e1e, transparent);
+  
+// }
 
 .logo:hover::after {
   width: 100%;

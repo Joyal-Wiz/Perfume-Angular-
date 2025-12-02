@@ -47,6 +47,7 @@ export class ProductListComponent implements OnInit {
 
     this.filteredProducts = [...this.products];
     this.totalProducts = this.filteredProducts.length;
+  
   }
 
 

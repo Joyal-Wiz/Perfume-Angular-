@@ -1,10 +1,13 @@
 <nav class="lux-navbar" [class.shrink]="isShrunk">
 
   <!-- LEFT: LOGO -->
-  <div class="nav-left">
-    <div class="logo">
-      <i class="ph ph-spray-bottle logo-icon">Dar-Al-Itr</i></div>
+<div class="nav-left">
+  <div class="logo">
+    <i class="ph ph-spray-bottle logo-icon"></i>
+    <span class="brand-text">Dar-Al-Itr</span>
   </div>
+</div>
+
 
   <!-- CENTER MENU -->
   <div class="nav-center">
@@ -48,7 +51,7 @@
       <a class="logout-btn" (click)="logout()">Logout</a>
     </ng-container>
     <ng-container *ngIf="isLoggedIn()">
-      <a routerLink="/dashboard"><i><img src="assets/img/user.png" style="height: 35px;" alt=""></i></a>
+      <a routerLink="/dashboard"><i><img src="assets/img/user1.jpg"style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;"alt=""></i></a>
     </ng-container>
 
   </div>

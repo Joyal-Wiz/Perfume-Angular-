@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from 'src/app/core/services/cart.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { WishlistService } from 'src/app/core/services/wishlist.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -17,12 +19,13 @@ export class NavbarComponent implements OnInit {
     private cartService: CartService,
     private auth: AuthService,
     public wishlistService: WishlistService,
+    private toast:ToastService,
+    private router:Router,
   ) {}
 
   ngOnInit(): void {
     this.updateCartCount();
 
-    // Listen for changes in cart
     this.cartService.cartChanged.subscribe(() => {
       this.updateCartCount();
     });
@@ -37,9 +40,12 @@ export class NavbarComponent implements OnInit {
     return this.auth.isLoggedIn();
   }
 
-  logout() {
-    this.auth.logout();
-  }
+logout() {
+  localStorage.removeItem('loggedUser');
+  this.toast.show("Logged out successfully!", "success");
+  this.router.navigate(['/home']);
+}
+
     isShrunk = false;
 
   @HostListener('window:scroll', [])
