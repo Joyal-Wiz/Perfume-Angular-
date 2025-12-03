@@ -9,7 +9,7 @@ import { OrderManagementComponent } from './order-management/order-management.co
 @NgModule({
   declarations: [
     OrdersListComponent,
-    OrderManagementComponent
+    OrderManagementComponent,
   ],
   imports: [
     CommonModule,

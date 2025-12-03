@@ -1,43 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
-  selector: 'app-orders-order-management',
+  selector: 'app-order-management',
   templateUrl: './order-management.component.html',
   styleUrls: ['./order-management.component.scss']
 })
 export class OrderManagementComponent implements OnInit {
 
-  order: any;
+  order: any = null;
+  role:string=''
 
-  constructor(private route: ActivatedRoute,
-    private toast:ToastService,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
+
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
-    this.order = allOrders.find((o: any) => o.id === id);
+    const allOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+    
+    this.order = allOrders.find((o:any) => o.id === id);
+
+    if (!this.order) {
+      this.toast.show("Order not found!", "error");
+      this.router.navigate(['/dashboard']);
+    }
   }
-cancelOrder() {
-  if (!confirm("Are you sure you want to cancel this order?")) return;
 
-  this.order.status = 'Cancelled';  // use standard spelling
+  saveUpdatedOrder() {
+    const allOrders = JSON.parse(localStorage.getItem("orders") || "[]");
+    const index = allOrders.findIndex((o:any) => o.id === this.order.id);
 
-  const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+    if (index !== -1) {
+      allOrders[index] = this.order;
+      localStorage.setItem("orders", JSON.stringify(allOrders));
+    }
+  }
 
-  const updated = allOrders.map((o: any) =>
-    o.id === this.order.id ? this.order : o
-  );
+  approveOrder() {
+    this.order.status = "Approved";
+    this.saveUpdatedOrder();
+    this.toast.show("Order Approved!", "success");
+  }
 
-  localStorage.setItem('orders', JSON.stringify(updated));
+  rejectOrder() {
+    this.order.status = "Rejected";
+    this.saveUpdatedOrder();
+    this.toast.show("Order Rejected!", "error");
+  }
 
-  this.toast.show("Order cancelled!", "error");
-
+  goBack() {
+    this.router.navigate(['/dashboard']);
+  }
+  cancelOrder() {
+  this.order.status = "Cancelled";
+  this.saveUpdatedOrder();
+}
+isAdmin() {
+  return this.role === 'admin';
 }
 
 
-  
 }

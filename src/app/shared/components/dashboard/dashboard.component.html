@@ -5,9 +5,10 @@
 
     <!-- USER CARD -->
     <div class="user-card">
-          <img 
-      [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
-      style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
+      <img 
+        [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
+        style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
+      
       <div class="user-info">
         <h3>{{ user?.name }}</h3>
         <p>{{ user?.email }}</p>
@@ -40,7 +41,7 @@
   <!-- RIGHT SIDE CONTENT -->
   <div class="content">
 
-    <!-- USER CONTENT -->
+    <!-- ================= USER CONTENT ================= -->
     <div *ngIf="role === 'user'">
 
       <!-- EMPTY STATE -->
@@ -52,7 +53,7 @@
       <!-- ORDER HISTORY -->
       <div class="order-history-section" *ngIf="userOrderedItems.length > 0">
 
-        <h2 class="section-title">Your previous Order's</h2>
+        <h2 class="section-title">Your Previous Orders</h2>
 
         <div class="orders-grid">
           <div class="ordered-item" *ngFor="let item of userOrderedItems">
@@ -70,6 +71,11 @@
 
             <span class="status delivered">Delivered</span>
 
+            <!-- VIEW ORDER BUTTON -->
+            <button class="view-order-btn" (click)="viewOrder(item)">
+              View Order
+            </button>
+
           </div>
         </div>
 
@@ -77,10 +83,51 @@
 
     </div>
 
-    <!-- ADMIN CONTENT -->
+    <!-- ================= ADMIN CONTENT ================= -->
     <div *ngIf="role === 'admin'">
+
       <h2 class="section-title">Welcome Admin</h2>
       <p>Use the left menu to manage products, orders & users.</p>
+
+      <!-- ADMIN ORDER STATS -->
+      <div class="admin-stats">
+        <div class="stat-card total">Total Orders: {{ adminStats.total }}</div>
+        <div class="stat-card approved">Approved: {{ adminStats.approved }}</div>
+        <div class="stat-card pending">Pending: {{ adminStats.pending }}</div>
+        <div class="stat-card rejected">Rejected: {{ adminStats.rejected }}</div>
+      </div>
+
+      <!-- PENDING ORDER REQUESTS -->
+      <h3 class="section-title" style="margin-top: 25px;">🛎 New Order Requests</h3>
+
+      <div *ngIf="pendingOrders.length === 0" class="empty">
+        <img src="assets/img/empty-orders.png" alt="">
+        <p>No pending order requests</p>
+      </div>
+
+      <div class="orders-grid" *ngIf="pendingOrders.length > 0">
+        <div class="ordered-item" *ngFor="let order of pendingOrders">
+
+          <div class="mist"></div>
+
+          <div class="item-info">
+            <h3>Order #{{ order.id }}</h3>
+
+            <p><strong>User:</strong> {{ order.checkout.email }}</p>
+            <p><strong>Total:</strong> ₹{{ order.total }}</p>
+            <p><strong>Date:</strong> {{ order.date }}</p>
+
+            <span class="status pending">Pending</span>
+
+            <!-- VIEW ORDER DETAILS -->
+            <button class="view-order-btn" (click)="openOrder(order)">
+              View & Approve / Reject
+            </button>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
   </div>

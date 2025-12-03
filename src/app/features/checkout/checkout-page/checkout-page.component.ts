@@ -93,17 +93,14 @@ startPayment() {
 
 
 createOrder() {
-
-  // ✅ MUST be inside the function
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser") || "{}");
 
   const newOrder = {
     id: Date.now(),
     date: new Date().toLocaleString(),
 
-    // 🔥 link order to logged-in user
-    userId: loggedUser.id || null,
-    userEmail: loggedUser.email || null,
+    userEmail: loggedUser.email,
+    userId: loggedUser.id,
 
     items: this.cartItems.map(i => ({
       ...i,
@@ -111,7 +108,7 @@ createOrder() {
     })),
 
     total: this.totalAmount,
-    status: 'Placed',
+    status: 'Pending',
 
     checkout: {
       name: this.checkoutData.name,
@@ -126,10 +123,10 @@ createOrder() {
   localStorage.setItem('orders', JSON.stringify(existing));
 
   localStorage.removeItem('cart');
-
   this.order = newOrder;
   this.showModal = true;
 }
+
   onModalClose() {
     this.showModal = false;
     this.router.navigate(['/orders']);

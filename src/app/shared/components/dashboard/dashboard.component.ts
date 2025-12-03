@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,45 +8,82 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  constructor(private router: Router) {}
+
   user: any = null;
   role: string | null = null;
 
   orders: any[] = [];
   userOrderedItems: any[] = [];
 
+  pendingOrders: any[] = [];
+
+  adminStats = {
+    total: 0,
+    approved: 0,
+    pending: 0,
+    rejected: 0
+  };
+
   ngOnInit(): void {
-    // Get logged user
+
+    // Load logged user
     const storedUser = localStorage.getItem('loggedUser');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
     }
 
-    // Get user/admin role
-    this.role = localStorage.getItem('role');  // "admin" or "user"
-
-    // If admin → dashboard should show admin menu only
-    if (this.role === 'admin') {
-      return; // skip user order loading
-    }
-
-    // USER order loading
-    if (!this.user) return;
+    this.role = localStorage.getItem('role');
 
     const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
+    // ===================== ADMIN =======================
+    if (this.role === 'admin') {
+      
+      this.adminStats.total = allOrders.length;
+      this.adminStats.approved = allOrders.filter((o:any) => o.status === "Approved").length;
+      this.adminStats.pending = allOrders.filter((o:any) => o.status === "Pending" || o.status === "Placed").length;
+      this.adminStats.rejected = allOrders.filter((o:any) => o.status === "Rejected").length;
+
+      // Load ONLY pending orders
+      this.pendingOrders = allOrders.filter((o:any) =>
+        o.status === "Pending" || o.status === "Placed"
+      );
+
+      return;
+    }
+
+    // ===================== USER =======================
+    if (!this.user) return;
+
 this.orders = allOrders.filter((o: any) =>
-o.userEmail === this.user.email || o.userId === this.user.id
+  o.userEmail === this.user.email || o.checkout.email === this.user.email
 );
 
-    this.userOrderedItems = this.orders.flatMap((order: any) => order.items);
+
+    this.userOrderedItems = this.orders.flatMap((order:any) => order.items);
   }
-  
-  
-  // admin
-    isAdmin() {
+
+  isAdmin() {
     return this.role === 'admin';
   }
-  
+
+  // When user clicks “View Order”
+  viewOrder(item: any) {
+    const order = this.orders.find((o:any) =>
+      o.items.some((i: any) => i.id === item.id)
+    );
+
+    if (order) {
+      localStorage.setItem("selectedOrder", JSON.stringify(order));
+      this.router.navigate(['/orders', order.id]);
+    }
+  }
+
+  // When admin clicks "View Request"
+  openOrder(order: any) {
+    localStorage.setItem("selectedOrder", JSON.stringify(order));
+    this.router.navigate(['/orders', order.id]);
+  }
+
 }
-
-

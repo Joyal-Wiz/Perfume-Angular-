@@ -436,4 +436,56 @@
   </div>
 
 </div>
+<div class="order-container" *ngIf="order && !isAdmin()">
 
+  <h2>Order Details</h2>
+
+  <!-- STATUS BADGE -->
+  <div class="status-badge" 
+       [ngClass]="{
+         'approved': order.status === 'Approved',
+         'pending': order.status === 'Pending' || order.status === 'Placed',
+         'rejected': order.status === 'Rejected'
+       }">
+    {{ order.status }}
+  </div>
+
+  <!-- CUSTOMER INFO -->
+  <div class="section">
+    <h3>Customer Info</h3>
+    <p><strong>Name:</strong> {{ order.checkout.name }}</p>
+    <p><strong>Email:</strong> {{ order.checkout.email }}</p>
+    <p><strong>Address:</strong> {{ order.checkout.address }}</p>
+  </div>
+
+  <!-- ITEMS LIST -->
+  <div class="section">
+    <h3>Ordered Items</h3>
+
+    <div class="item-card" *ngFor="let i of order.items">
+      <img [src]="i.image">
+      <div>
+        <h4>{{ i.name }}</h4>
+        <p>Brand: {{ i.brand }}</p>
+        <p>Qty: {{ i.quantity }}</p>
+        <p>Final Price: ₹{{ i.finalPrice }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-box">
+    <h3>Total Amount: ₹{{ order.total }}</h3>
+  </div>
+
+  <!-- ADMIN ACTION BUTTONS -->
+  <div class="actions">
+    <button class="approve" (click)="approveOrder()" *ngIf="isAdmin()">Approve</button>
+    <button class="reject" (click)="rejectOrder()" *ngIf="isAdmin()">Reject</button>
+  </div>
+
+  <button class="back-btn" (click)="goBack()">⬅ Back</button>
+
+</div>
+
+  
