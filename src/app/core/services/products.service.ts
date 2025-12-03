@@ -59,10 +59,28 @@ products = [
 
 
 
-  constructor() {}
 
-  getAllProducts() {
-    return this.products;
+  constructor() {
+    // Load static products only once
+  if (!localStorage.getItem('products') || JSON.parse(localStorage.getItem('products')!).length === 0) {
+    localStorage.setItem('products', JSON.stringify(this.products));
   }
-  
+  }
+
+  // Always return local storage products
+  getProducts() {
+    return JSON.parse(localStorage.getItem('products') || '[]');
+  }
+
+  // Get single product by ID
+  getProductById(id: number) {
+    return this.getProducts().find((p: any) => p.id === id);
+  }
+
+  // Delete product by ID
+  deleteProduct(id: number) {
+    let products = this.getProducts();
+    products = products.filter((p: any) => p.id !== id);
+    localStorage.setItem('products', JSON.stringify(products));
+  }
 }

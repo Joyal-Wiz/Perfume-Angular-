@@ -8,15 +8,27 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
 
   user: any = null;
+  role: string | null = null;
+
   orders: any[] = [];
   userOrderedItems: any[] = [];
 
   ngOnInit(): void {
+    // Get logged user
     const storedUser = localStorage.getItem('loggedUser');
     if (storedUser) {
       this.user = JSON.parse(storedUser);
     }
 
+    // Get user/admin role
+    this.role = localStorage.getItem('role');  // "admin" or "user"
+
+    // If admin → dashboard should show admin menu only
+    if (this.role === 'admin') {
+      return; // skip user order loading
+    }
+
+    // USER order loading
     if (!this.user) return;
 
     const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');

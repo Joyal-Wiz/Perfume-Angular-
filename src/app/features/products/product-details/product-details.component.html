@@ -22,7 +22,8 @@
   </div>
 
   <!-- RIGHT: PRODUCT INFO -->
-  <div class="right">
+<div class="right" *ngIf="!editMode">
+
 
     <!-- BRAND TAG -->
     <div class="brand-tag">
@@ -90,7 +91,7 @@
     </div>
 
     <!-- Key Features -->
-    <div class="features-grid">
+    <div class="features-grid" *ngIf="!isAdmin()">
       <div class="feature-item">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -144,7 +145,8 @@
     </div>
 
     <!-- SPECIAL OFFER BANNER -->
-    <div class="special-offer" *ngIf="product.discount > 0">
+    <div class="special-offer" *ngIf="product.discount > 0 && !isAdmin()">
+>
       <div class="offer-icon">⚡</div>
       <div class="offer-content">
         <strong>Limited Time Offer</strong>
@@ -169,6 +171,7 @@
         class="add-btn"
         [disabled]="product.stock === 0"
         (click)="addToCart()"
+         *ngIf="role !== 'admin'"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="9" cy="21" r="1"/>
@@ -182,6 +185,7 @@
         class="buy-btn"
         [disabled]="product.stock === 0"
         (click)="buyNow()"
+         *ngIf="role !== 'admin'"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -189,9 +193,27 @@
         Buy Now
       </button>
     </div>
+    <!-- admin -->
+
+    <div *ngIf="role === 'admin'" class="admin-actions">
+<button class="edit-btn" (click)="enableEdit()">Edit</button>
+<button class="delete-btn" (click)="showDeleteConfirm = true">🗑 Delete</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Quantity Selector & Compare -->
-    <div class="quantity-compare-row">
+    <div class="quantity-compare-row" *ngIf="!isAdmin()">
       <div class="quantity-selector">
         <button class="qty-btn" >−</button>
         <input type="number" class="qty-input" value="1" min="1" readonly>
@@ -208,14 +230,14 @@
     </div>
 
     <!-- TRUST BADGES -->
-    <div class="trust-badges">
+    <div class="trust-badges" *ngIf="!isAdmin()">
       <div class="badge-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
         <span>Secure Payment</span>
       </div>
-      <div class="badge-item">
+      <div class="badge-item" >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
           <line x1="1" y1="10" x2="23" y2="10"/>
@@ -233,7 +255,7 @@
     </div>
 
     <!-- Delivery Info Card -->
-    <div class="delivery-info-card">
+    <div class="delivery-info-card" *ngIf="!isAdmin()">
       <div class="delivery-header">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="1" y="3" width="15" height="13"/>
@@ -266,5 +288,61 @@
     </div>
 
   </div>
+</div>
+
+<!-- admin -->
+<app-confirmation-modal
+  *ngIf="showDeleteConfirm"
+  message="Are you sure you want to delete this product?"
+  (confirm)="deleteProduct()"
+  (cancel)="showDeleteConfirm = false">
+</app-confirmation-modal>
+
+
+
+<div class="right" *ngIf="editMode">
+  
+  <div class="edit-form">
+
+    <h3>Edit Product</h3>
+
+    <label>Name</label>
+    <input [(ngModel)]="product.name" />
+
+    <label>Brand</label>
+    <input [(ngModel)]="product.brand" />
+
+    <label>Category</label>
+    <input [(ngModel)]="product.category" />
+
+    <label>Price</label>
+    <input type="number" [(ngModel)]="product.price" />
+
+    <label>Discount</label>
+    <input type="number" [(ngModel)]="product.discount" />
+
+    <label>Stock</label>
+    <input type="number" [(ngModel)]="product.stock" />
+
+    <label>Image URL</label>
+    <input [(ngModel)]="product.image" />
+
+    <!-- ⭐ IMAGE PREVIEW ADDED HERE ⭐ -->
+   <label>Upload Image</label>
+<input type="file" (change)="onFileSelected($event)" />
+
+<label>OR Image URL</label>
+<input [(ngModel)]="product.image" />
+
+<!-- Image Preview -->
+<div class="img-preview" *ngIf="product.image">
+  <img [src]="product.image" alt="Preview">
+</div>
+
+    <button (click)="saveChanges()">Save</button>
+    <button (click)="cancelEdit()">Cancel</button>
+
+  </div>
+
 </div>
 

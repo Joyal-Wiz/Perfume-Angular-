@@ -15,6 +15,8 @@ export class ProductListComponent implements OnInit {
 
   products: any[] = [];
   filteredProducts: any[] = [];
+  role: string = '';
+
 
   // Filters
   selectedCategory = "All";
@@ -40,7 +42,12 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.getAllProducts();
+  const user = localStorage.getItem('loggedUser');
+  if (user) {
+    const parsed = JSON.parse(user);
+    this.role = parsed.role || localStorage.getItem("role");
+  }
+    this.products = this.productsService.getProducts();
 
     // Extract unique brands
     this.brands = [...new Set(this.products.map(p => p.brand))];

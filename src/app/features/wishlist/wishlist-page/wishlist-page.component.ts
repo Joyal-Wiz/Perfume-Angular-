@@ -19,8 +19,8 @@ constructor(
 ngOnInit() {
   const ids = this.wishlistService.getWishlist(); // array of numbers
 
-  this.products = this.productsService.getAllProducts()
-      .filter(p => ids.includes(p.id));
+  this.products = this.productsService.getProducts()
+  .filter((p: any) => ids.includes(p.id));
 }
 
 

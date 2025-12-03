@@ -14,10 +14,23 @@
 
     <!-- MENU -->
     <div class="menu">
-      <button routerLink="/dashboard" class="active">👤 Profile</button>
-      <button routerLink="/dashboard">📦 My Orders</button>
-      <button routerLink="/cart">🛒 My Cart</button>
-      <button routerLink="/products">🛍 Shop More</button>
+
+      <!-- USER MENU -->
+      <ng-container *ngIf="role === 'user'">
+        <button routerLink="/dashboard" class="active">👤 Profile</button>
+        <button routerLink="/dashboard">📦 My Orders</button>
+        <button routerLink="/cart">🛒 My Cart</button>
+        <button routerLink="/products">🛍 Shop More</button>
+      </ng-container>
+
+      <!-- ADMIN MENU -->
+      <ng-container *ngIf="role === 'admin'">
+        <button routerLink="/dashboard" class="active">🛠 Admin Dashboard</button>
+        <button routerLink="/products">📦 Manage Products</button>
+        <button routerLink="/orders/manage">📑 Manage Orders</button>
+        <button routerLink="/users/manage">👥 Manage Users</button>
+      </ng-container>
+
     </div>
 
   </div>
@@ -25,39 +38,49 @@
   <!-- RIGHT SIDE CONTENT -->
   <div class="content">
 
-    <!-- EMPTY STATE -->
-    <div class="empty" *ngIf="userOrderedItems.length === 0">
-      <img src="assets/img/empty-orders.png" alt="">
-      <p>No orders yet!</p>
-    </div>
+    <!-- USER CONTENT -->
+    <div *ngIf="role === 'user'">
 
-<!-- RIGHT SIDE: ORDER HISTORY -->
-<div class="order-history-section">
-
-  <h2 class="section-title">Your previous Order's</h2>
-
-  <div class="orders-grid">
-    <div class="ordered-item" *ngFor="let item of userOrderedItems">
-      
-      <div class="mist"></div>
-
-      <img class="item-img" [src]="item.image">
-
-      <div class="item-info">
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.brand }}</p>
-        <p>Qty: {{ item.quantity }}</p>
-        <p class="price">₹{{ item.finalPrice }}</p>
+      <!-- EMPTY STATE -->
+      <div class="empty" *ngIf="userOrderedItems.length === 0">
+        <img src="assets/img/empty-orders.png" alt="">
+        <p>No orders yet!</p>
       </div>
 
-      <span class="status delivered">Delivered</span>
+      <!-- ORDER HISTORY -->
+      <div class="order-history-section" *ngIf="userOrderedItems.length > 0">
+
+        <h2 class="section-title">Your previous Order's</h2>
+
+        <div class="orders-grid">
+          <div class="ordered-item" *ngFor="let item of userOrderedItems">
+
+            <div class="mist"></div>
+
+            <img class="item-img" [src]="item.image">
+
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.brand }}</p>
+              <p>Qty: {{ item.quantity }}</p>
+              <p class="price">₹{{ item.finalPrice }}</p>
+            </div>
+
+            <span class="status delivered">Delivered</span>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- ADMIN CONTENT -->
+    <div *ngIf="role === 'admin'">
+      <h2 class="section-title">Welcome Admin</h2>
+      <p>Use the left menu to manage products, orders & users.</p>
+    </div>
+
   </div>
 
-</div>
-
-
-
-
-  </div>
 </div>

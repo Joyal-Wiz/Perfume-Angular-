@@ -738,3 +738,63 @@
   70% { transform: scale(0.9); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+
+
+// admin
+
+.admin-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background: #0078ff;
+}
+
+.edit-btn:hover {
+  background: #005fcc;
+}
+
+.delete-btn {
+  background: #e40000;
+}
+
+.delete-btn:hover {
+  background: #bb0000;
+}
+
+
+
+.edit-form {
+  margin-top: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+  label { display: block; margin-top: 12px; }
+  input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+  button { margin-top: 15px; margin-right: 10px; }
+}
+input[type="file"] {
+  margin-top: 8px;
+}
+
+.img-preview img {
+  width: 150px;
+  margin-top: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}

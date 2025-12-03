@@ -2,7 +2,14 @@
     <div class="header">
       <h1>L'essence Luxe</h1>
       <p>Curated Fragrances</p>
+      <!-- ADMIN ONLY: Add Product -->
+<div *ngIf="role === 'admin'" class="add-product-container">
+  <button class="add-product-btn" routerLink="/products/add">
+    ➕ Add Product
+  </button>
+</div>
     </div>
+
 
 
     <!-- 🌟 GLASS SEARCH BAR -->
@@ -59,6 +66,10 @@
         class="wishlist-btn"
         [class.active]="wishlistService.isInWishlist(p.id)"
         (click)="toggleWishlist(p.id); $event.stopPropagation()"
+          *ngIf="role === 'admins'"
+  class="wishlist-btn disabled"
+  disabled
+
       >
         <img src="assets/img/love2.png" class="wishlist-icon" alt="heart">
       </button>

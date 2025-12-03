@@ -631,3 +631,25 @@ cubic-bezier(0.4, 0, 0.2, 1);
         padding: 40px 30px;
       }
     }
+
+//add product
+    .add-product-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0 20px;
+}
+
+.add-product-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.add-product-btn:hover {
+  background: #333;
+}

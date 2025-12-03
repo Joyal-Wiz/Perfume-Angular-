@@ -38,6 +38,7 @@ import { ToastComponent } from './components/toast/toast.component';
   ToastComponent,
   DashboardComponent,
   FooterComponent,
+  ConfirmationModalComponent,
 ],
 
 })

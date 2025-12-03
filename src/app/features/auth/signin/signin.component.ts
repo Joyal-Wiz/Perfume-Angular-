@@ -18,26 +18,25 @@ export class SigninComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toast:ToastService,
+    private toast: ToastService,
   ) {}
-onSignin() {
-  if (!this.formData.email || !this.formData.password) {
-    alert("Please enter email and password.");
-    return;
-  }
 
-  const isValid = this.authService.signin(this.formData);
+  onSignin() {
+    if (!this.formData.email || !this.formData.password) {
+      alert("Please enter email and password.");
+      return;
+    }
 
-  if (isValid) {
-this.toast.show("Login successful!", "success");
+    const isValid = this.authService.signin(this.formData);
 
-    // ⭐ Redirect to home page
-    this.router.navigate(['/home']);
-  } 
-  else {
-    this.toast.show("Invalid email or password", "error");
+    if (isValid) {
+      this.toast.show("Login successful!", "success");
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.toast.show("Invalid email or password", "error");
+    }
   }
 }
 
 
-}
+

@@ -1,0 +1,51 @@
+<div class="add-product-container">
+
+  <h2>Add New Product</h2>
+
+  <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+
+    <!-- Product Name -->
+    <label>Product Name</label>
+    <input type="text" [(ngModel)]="product.name" name="name" required>
+
+    <!-- Brand -->
+    <label>Brand</label>
+    <select [(ngModel)]="product.brand" name="brand" required>
+      <option value="" disabled>Select brand</option>
+      <option *ngFor="let b of brands" [value]="b">{{ b }}</option>
+    </select>
+
+    <!-- Category -->
+    <label>Category</label>
+    <select [(ngModel)]="product.category" name="category" required>
+      <option value="" disabled>Select category</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+
+    <!-- Price -->
+    <label>Price</label>
+    <input type="number" [(ngModel)]="product.price" name="price" required>
+
+    <!-- Discount -->
+    <label>Discount (%)</label>
+    <input type="number" [(ngModel)]="product.discount" name="discount" required>
+
+    <!-- Stock -->
+    <label>Stock</label>
+    <input type="number" [(ngModel)]="product.stock" name="stock" required>
+
+    <!-- Image URL -->
+    <label>Image URL</label>
+    <input type="text" [(ngModel)]="product.image" name="image" required>
+
+    <!-- Image Preview -->
+    <div class="img-preview" *ngIf="product.image">
+      <img [src]="product.image" alt="">
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" [disabled]="!productForm.valid">Save Product</button>
+
+  </form>
+
+</div>

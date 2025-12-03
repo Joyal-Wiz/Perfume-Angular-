@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   cartCount = 0;   // <-- FIX
+  role: string = '';
+
   
 
   constructor(
@@ -25,6 +27,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateCartCount();
+    this.role = localStorage.getItem('role') || '';
+    window.addEventListener('storage', () => {
+    this.role = localStorage.getItem('role') || '';
+  });
 
     this.cartService.cartChanged.subscribe(() => {
       this.updateCartCount();
@@ -52,4 +58,9 @@ logout() {
   onScroll() {
     this.isShrunk = window.scrollY > 20;
   }
+
+  isAdmin() {
+  return this.role === 'admin';
+}
+
 }
