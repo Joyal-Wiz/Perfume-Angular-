@@ -17,10 +17,11 @@ export class AddProductComponent implements OnInit {
     price: null,
     discount: null,
     stock: null,
-    image: ''
+    image: ''   // Base64 image will be stored here
   };
 
-  // Dropdown options
+  previewImage: string | ArrayBuffer | null = null;
+
   brands: string[] = [];
   categories = ["Men", "Women", "Unisex", "Fresh", "Luxury", "Oud"];
 
@@ -31,9 +32,24 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // get existing products to extract unique brands
     const products = this.productService.getProducts();
-  this.brands = [...new Set(products.map((p: any) => p.brand))] as string[];
+    this.brands = [...new Set(products.map((p: any) => p.brand))] as string[];
+  }
+
+  // 📌 Handle File Upload + Preview
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.previewImage = reader.result;     // For UI preview
+      this.product.image = reader.result;    // Save Base64 in product object
+    };
+
+    reader.readAsDataURL(file);  // Convert to Base64
   }
 
   saveProduct() {
@@ -52,5 +68,4 @@ export class AddProductComponent implements OnInit {
 
     this.router.navigate(['/products']);
   }
-
 }

@@ -26,19 +26,19 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    /** ⭐ 1. CART COUNT LIVE UPDATE */
+    /**  1. CART COUNT LIVE UPDATE */
     this.updateCartCount();
     this.cartService.cartChanged.subscribe(() => {
       this.updateCartCount();
     });
 
-    /** ⭐ 2. SUBSCRIBE TO ROLE CHANGES (NO REFRESH NEEDED) */
+    /** 2. SUBSCRIBE TO ROLE CHANGES (NO REFRESH NEEDED) */
     this.auth.role$.subscribe(role => {
       this.role = role;
     });
   }
 
-  /** ⭐ Update cart count */
+  /** Update cart count */
   updateCartCount() {
     const cart = this.cartService.getCart();
     this.cartCount = cart.reduce((total: number, item: any) => total + item.quantity, 0);
@@ -49,20 +49,20 @@ export class NavbarComponent implements OnInit {
     return this.auth.isLoggedIn();
   }
 
-  /** ⭐ Logout */
+  /**  Logout */
   logout() {
     this.auth.logout();   // uses auth service
     this.toast.show("Logged out successfully!", "success");
     this.router.navigate(['/home']);
   }
 
-  /** ⭐ Navbar shrink on scroll */
+  /**  Navbar shrink on scroll */
   @HostListener('window:scroll', [])
   onScroll() {
     this.isShrunk = window.scrollY > 20;
   }
 
-  /** ⭐ Admin check */
+  /**  Admin check */
   isAdmin() {
     return this.role === 'admin';
   }

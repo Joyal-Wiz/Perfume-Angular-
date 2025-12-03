@@ -34,14 +34,15 @@
     <label>Stock</label>
     <input type="number" [(ngModel)]="product.stock" name="stock" required>
 
-    <!-- Image URL -->
-    <label>Image URL</label>
-    <input type="text" [(ngModel)]="product.image" name="image" required>
+<!-- Image Upload -->
+<label>Upload Image</label>
+<input type="file" (change)="onFileSelected($event)" accept="image/*">
 
-    <!-- Image Preview -->
-    <div class="img-preview" *ngIf="product.image">
-      <img [src]="product.image" alt="">
-    </div>
+<!-- Image Preview -->
+<div class="img-preview" *ngIf="previewImage">
+  <img [src]="previewImage" alt="">
+</div>
+
 
     <!-- Submit -->
     <button type="submit" [disabled]="!productForm.valid">Save Product</button>

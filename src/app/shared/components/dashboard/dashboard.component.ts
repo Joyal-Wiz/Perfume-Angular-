@@ -33,10 +33,19 @@ export class DashboardComponent implements OnInit {
 
     const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
-    this.orders = allOrders.filter((o: any) =>
-      o.checkout?.email === this.user.email
-    );
+this.orders = allOrders.filter((o: any) =>
+o.userEmail === this.user.email || o.userId === this.user.id
+);
 
     this.userOrderedItems = this.orders.flatMap((order: any) => order.items);
   }
+  
+  
+  // admin
+    isAdmin() {
+    return this.role === 'admin';
+  }
+  
 }
+
+

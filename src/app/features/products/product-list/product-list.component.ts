@@ -123,5 +123,8 @@ addProduct(p: any) {
 toggleWishlist(id: number) {
   this.wishlistService.toggleWishlist(id);
 }
+  isAdmin() {
+    return this.role === 'admin';
+  }
 
 }

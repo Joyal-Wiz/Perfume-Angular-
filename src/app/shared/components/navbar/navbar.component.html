@@ -14,7 +14,7 @@
     <ul class="nav-menu glass-pill">
       <li><a routerLink="/home">Home</a></li>
       <li><a routerLink="/products">Products</a></li>
-      <li><a routerLink="/about">About</a></li>
+      <li *ngIf="isLoggedIn() && role === 'user'"><a routerLink="/about">About</a></li>
 <li *ngIf="isLoggedIn() && role === 'user'">
   <a routerLink="/orders">Orders</a>
 </li>
@@ -24,7 +24,7 @@
   <!-- RIGHT SIDE -->
   <div class="nav-right">
 
-    <a routerLink="/wishlist" class="wishlist-nav">
+    <a routerLink="/wishlist" class="wishlist-nav" *ngIf="!isAdmin()">
   <div class="icon-wrapper">
     <img src="assets/img/love.png" style="height: 27px;" alt="" class="wishlist-icon" />
     
@@ -36,7 +36,7 @@
 
 
     <!-- CART ICON -->
-    <div class="cart-icon" routerLink="/cart">
+    <div class="cart-icon" routerLink="/cart" *ngIf="!isAdmin()">
       <i class="ph ph-shopping-cart cart-symbol"><img src="assets/img/cart1.png" style="height: 27px;" alt=""></i>
       <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
     </div>
@@ -51,9 +51,14 @@
     <ng-container *ngIf="isLoggedIn()">
       <a class="logout-btn" (click)="logout()">Logout</a>
     </ng-container>
-    <ng-container *ngIf="isLoggedIn()">
-      <a routerLink="/dashboard"><i><img src="assets/img/user1.jpg"style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;"alt=""></i></a>
-    </ng-container>
+<ng-container *ngIf="isLoggedIn()">
+  <a routerLink="/dashboard">
+    <img 
+      [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
+      style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
+  </a>
+</ng-container>
+
 
   </div>
 

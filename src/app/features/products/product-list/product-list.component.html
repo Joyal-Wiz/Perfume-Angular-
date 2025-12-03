@@ -11,7 +11,6 @@
     </div>
 
 
-
     <!-- 🌟 GLASS SEARCH BAR -->
     <div class="glass-search">
       <i class="ph ph-magnifying-glass search-icon"><img src="assets/img/search.png" style="height: 30px; " alt=""></i>
@@ -98,6 +97,7 @@
         class="add-btn"
         [disabled]="p.stock === 0"
         (click)="addProduct(p); $event.stopPropagation()"
+        *ngIf="!isAdmin()"
       >
         {{ p.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
       </button>

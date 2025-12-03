@@ -5,7 +5,9 @@
 
     <!-- USER CARD -->
     <div class="user-card">
-      <img src="assets/img/user1.jpg" class="avatar">
+          <img 
+      [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
+      style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
       <div class="user-info">
         <h3>{{ user?.name }}</h3>
         <p>{{ user?.email }}</p>

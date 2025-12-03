@@ -93,11 +93,18 @@ startPayment() {
 
 
 createOrder() {
+
+  // ✅ MUST be inside the function
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser") || "{}");
+
   const newOrder = {
     id: Date.now(),
     date: new Date().toLocaleString(),
 
-    // ADD finalPrice HERE
+    // 🔥 link order to logged-in user
+    userId: loggedUser.id || null,
+    userEmail: loggedUser.email || null,
+
     items: this.cartItems.map(i => ({
       ...i,
       finalPrice: ((i.price - (i.price * i.discount / 100)) * i.quantity).toFixed(2)
@@ -105,6 +112,7 @@ createOrder() {
 
     total: this.totalAmount,
     status: 'Placed',
+
     checkout: {
       name: this.checkoutData.name,
       address: this.checkoutData.address,
@@ -122,9 +130,6 @@ createOrder() {
   this.order = newOrder;
   this.showModal = true;
 }
-
-
-
   onModalClose() {
     this.showModal = false;
     this.router.navigate(['/orders']);
