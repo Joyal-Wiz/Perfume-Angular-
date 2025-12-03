@@ -12,55 +12,58 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  cartCount = 0;   // <-- FIX
-  role: string = '';
-
-  
+  cartCount = 0;
+  role: string = '';   // Updated via BehaviorSubject
+  isShrunk = false;
 
   constructor(
     private cartService: CartService,
     private auth: AuthService,
     public wishlistService: WishlistService,
-    private toast:ToastService,
-    private router:Router,
+    private toast: ToastService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.updateCartCount();
-    this.role = localStorage.getItem('role') || '';
-    window.addEventListener('storage', () => {
-    this.role = localStorage.getItem('role') || '';
-  });
 
+    /** ⭐ 1. CART COUNT LIVE UPDATE */
+    this.updateCartCount();
     this.cartService.cartChanged.subscribe(() => {
       this.updateCartCount();
     });
+
+    /** ⭐ 2. SUBSCRIBE TO ROLE CHANGES (NO REFRESH NEEDED) */
+    this.auth.role$.subscribe(role => {
+      this.role = role;
+    });
   }
 
+  /** ⭐ Update cart count */
   updateCartCount() {
     const cart = this.cartService.getCart();
     this.cartCount = cart.reduce((total: number, item: any) => total + item.quantity, 0);
   }
 
+  /** ⭐ Logged-in check */
   isLoggedIn() {
     return this.auth.isLoggedIn();
   }
 
-logout() {
-  localStorage.removeItem('loggedUser');
-  this.toast.show("Logged out successfully!", "success");
-  this.router.navigate(['/home']);
-}
+  /** ⭐ Logout */
+  logout() {
+    this.auth.logout();   // uses auth service
+    this.toast.show("Logged out successfully!", "success");
+    this.router.navigate(['/home']);
+  }
 
-    isShrunk = false;
-
+  /** ⭐ Navbar shrink on scroll */
   @HostListener('window:scroll', [])
   onScroll() {
     this.isShrunk = window.scrollY > 20;
   }
 
+  /** ⭐ Admin check */
   isAdmin() {
-  return this.role === 'admin';
-}
-
+    return this.role === 'admin';
+  }
 }
