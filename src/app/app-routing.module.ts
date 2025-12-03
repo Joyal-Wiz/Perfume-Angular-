@@ -39,7 +39,7 @@ const routes: Routes = [
   path: 'checkout',
   loadChildren: () =>
     import('./features/checkout/checkout.module').then(m => m.CheckoutModule)
-},
+}, 
 {
   path: 'about',
   component: AboutComponent

@@ -37,7 +37,7 @@
     <!-- CART ICON -->
     <div class="cart-icon" routerLink="/cart">
       <i class="ph ph-shopping-cart cart-symbol"><img src="assets/img/cart1.png" style="height: 27px;" alt=""></i>
-      <span class="cart-badge">{{ cartCount }}</span>
+      <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
     </div>
     
 

@@ -117,5 +117,4 @@ toggleWishlist(id: number) {
   this.wishlistService.toggleWishlist(id);
 }
 
-
 }
