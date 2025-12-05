@@ -1,85 +1,146 @@
 <div class="user-details-container" *ngIf="user">
 
-  <!-- PROFILE HEADER -->
-  <div class="profile-header">
-    <div class="profile-img-wrapper">
-      <img [src]="profileImageUrl" class="profile-img">
-
-      <!-- Upload Image -->
-      <!-- <label class="upload-btn">
-        <input type="file" accept="image/*" (change)="onImageUpload($event)">
-        Change Photo
-      </label> -->
+  <!-- HERO SECTION -->
+  <div class="hero-section">
+    <!-- Animated Background Shapes -->
+    <div class="hero-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
     </div>
 
-    <div class="user-basic-info">
-      <h2>{{ user.name }}</h2>
-      <p>{{ user.email }}</p>
-      <span class="role-tag">{{ user.role | uppercase }}</span>
-    </div>
-  </div>
-
-  <!-- USER INFO CARD -->
-  <div class="info-card">
-    <h3>User Info</h3>
-
-    <div class="info-row">
-      <strong>Name:</strong>
-      <span>{{ user.name }}</span>
-    </div>
-
-    <div class="info-row">
-      <strong>Email:</strong>
-      <span>{{ user.email }}</span>
-    </div>
-
-    <div class="info-row">
-      <strong>Role:</strong>
-      <span>{{ user.role }}</span>
-    </div>
-  </div>
-
-  <!-- ORDER HISTORY -->
-  <div class="orders-section">
-    <h3>User Orders</h3>
-
-    <div *ngIf="userOrders.length === 0" class="no-orders">
-      No orders placed by this user.
-    </div>
-
-    <div class="order-card" *ngFor="let order of userOrders">
-
-      <div class="order-header">
-        <p><strong>Order ID:</strong> {{ order.id }}</p>
-        <p class="status {{ order.status | lowercase }}">
-          {{ order.status }}
-        </p>
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-subtitle">User Profile Dashboard</div>
+        <h1>
+          Welcome Back, <br>
+          <span class="highlight">Admin</span>
+        </h1>
+        <p>Manage Users profile, track orders, and explore the account details all in one place.</p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">{{ userOrders.length }}</span>
+            <span class="stat-label">Total Orders</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ getActiveOrders() }}</span>
+            <span class="stat-label">Active</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ getCompletedOrders() }}</span>
+            <span class="stat-label">Completed</span>
+          </div>
+        </div>
       </div>
 
-      <div class="order-items">
+      <!-- Floating Cards Visual -->
+      <div class="hero-visual">
+        <div class="floating-card">
+          <div class="card-icon">📦</div>
+          <div class="card-title">Recent Orders</div>
+          <div class="card-value">{{ userOrders.length }}</div>
+        </div>
+        <div class="floating-card">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">Member Since</div>
+          <div class="card-value">2024</div>
+        </div>
+        <div class="floating-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Status</div>
+          <div class="card-value">Active</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="order-item" *ngFor="let item of order.items">
-          <img [src]="item.image" class="order-img">
+  <!-- CONTENT WRAPPER -->
+  <div class="content-wrapper">
 
-          <div class="item-info">
-            <h4>{{ item.name }}</h4>
-            <p>{{ item.brand }}</p>
-            <p>Qty: {{ item.quantity }}</p>
-            <p>₹{{ item.finalPrice }}</p>
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-img-wrapper">
+        <img [src]="profileImageUrl" class="profile-img">
 
-            <button class="go-product-btn" (click)="goToProduct(item.id)">
-              Go to Product
-            </button>
+        <!-- Upload Image -->
+        <!-- <label class="upload-btn">
+          <input type="file" accept="image/*" (change)="onImageUpload($event)">
+          Change Photo
+        </label> -->
+      </div>
+
+      <div class="user-basic-info">
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+        <span class="role-tag">{{ user.role | uppercase }}</span>
+      </div>
+    </div>
+
+    <!-- USER INFO CARD -->
+    <div class="info-card">
+      <h3>User Info</h3>
+
+      <div class="info-row">
+        <strong>Name:</strong>
+        <span>{{ user.name }}</span>
+      </div>
+
+      <div class="info-row">
+        <strong>Email:</strong>
+        <span>{{ user.email }}</span>
+      </div>
+
+      <div class="info-row">
+        <strong>Role:</strong>
+        <span>{{ user.role }}</span>
+      </div>
+    </div>
+
+    <!-- ORDER HISTORY -->
+    <div class="orders-section">
+      <h3>User Orders</h3>
+
+      <div *ngIf="userOrders.length === 0" class="no-orders">
+        No orders placed by this user.
+      </div>
+
+      <div class="order-card" *ngFor="let order of userOrders">
+
+        <div class="order-header">
+          <p><strong>Order ID:</strong> {{ order.id }}</p>
+          <p class="status {{ order.status | lowercase }}">
+            {{ order.status }}
+          </p>
+        </div>
+
+        <div class="order-items">
+
+          <div class="order-item" *ngFor="let item of order.items">
+            <img [src]="item.image" class="order-img">
+
+            <div class="item-info">
+              <h4>{{ item.name }}</h4>
+              <p>{{ item.brand }}</p>
+              <p>Qty: {{ item.quantity }}</p>
+              <p>₹{{ item.finalPrice }}</p>
+
+              <button class="go-product-btn" (click)="goToProduct(item.id)">
+                Go to Product
+              </button>
+            </div>
+
           </div>
 
         </div>
 
       </div>
-
     </div>
-  </div>
 
-  <!-- DELETE USER BUTTON -->
-  <button class="delete-btn" (click)="deleteUser()">Delete User</button>
+    <!-- DELETE USER BUTTON -->
+    <button class="delete-btn" (click)="deleteUser()">Delete User</button>
+
+  </div>
 
 </div>

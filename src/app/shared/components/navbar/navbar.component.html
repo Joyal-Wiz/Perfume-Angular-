@@ -11,10 +11,13 @@
   <!-- CENTER MENU -->
   <div class="nav-center">
     <ul class="nav-menu glass-pill">
-      <li><a routerLink="/home">Home</a></li>
+<li *ngIf="!isLoggedIn() || role === 'user'">
+  <a routerLink="/home">Home</a>
+</li>
+
       <li><a routerLink="/products">Products</a></li>
 
-      <li *ngIf="isLoggedIn() && role === 'user'">
+      <li *ngIf="!isLoggedIn() || role === 'user'">
         <a routerLink="/about">About</a>
       </li>
 
@@ -48,7 +51,7 @@
 
     <!-- 🔔 NOTIFICATION BELL (ADMIN ONLY) -->
     <div class="notif-wrapper" *ngIf="isAdmin()" (click)="toggleDropdown()">
-      <img src="assets/img/bell.png" style="height: 26px;" class="notif-icon">
+    <img src="assets/img/bell.png" class="notif-icon" style="height: 26px;" [class.ring]="unreadCount > 0">
       
 
       <!-- Unread badge -->
@@ -74,7 +77,7 @@
         </div>
 
         <ng-template #emptyState>
-          <p class="empty-msg">No notifications</p>
+          <p class="empty-msg">No message yet</p>
         </ng-template>
 
         <button class="clear-btn" (click)="clearAll()">Clear All</button>

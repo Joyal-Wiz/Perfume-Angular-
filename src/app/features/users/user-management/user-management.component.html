@@ -1,61 +1,93 @@
-<div class="user-management">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management Dashboard</title>
 
-  <h2>Registered Users</h2>
+</head>
+<body>
 
-  <!-- Search + Filters + Sort -->
-  <div class="filters">
-    
-    <!-- Search -->
-    <input 
-      type="text" 
-      placeholder="Search by name or email..."
-      [(ngModel)]="searchText"
-      (input)="applyFilters()">
-
-    <!-- Role Filter -->
-    <select [(ngModel)]="selectedRole" (change)="applyFilters()">
-      <option value="All">All Roles</option>
-      <option value="user">User</option>
-      <option value="admin">Admin</option>
-    </select>
-
-    <!-- Sort -->
-    <select [(ngModel)]="sortType" (change)="applyFilters()">
-      <option value="">Sort</option>
-      <option value="az">A → Z</option>
-      <option value="za">Z → A</option>
-    </select>
-
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>User Management Dashboard</h1>
+    <p>Efficiently manage the users, and permissions with our intuitives for modern organizations</p>
   </div>
 
-  <!-- Users List -->
-  <div class="user-list">
-    <div class="user-card" *ngFor="let user of paginatedUsers">
 
-      <div class="left">
-        <img src="assets/img/user1.jpg" class="avatar">
-        <div class="info">
-          <h3>{{ user.name }}</h3>
-          <p>{{ user.email }}</p>
-          <span class="role">{{ user.role }}</span>
-        </div>
+
+  <!-- User Management Section -->
+  <div class="user-management">
+
+
+
+    <!-- Search + Filters + Sort -->
+    <div class="filters">
+      
+      <!-- Search -->
+      <div class="search-wrapper">
+        
+        <input 
+          type="text" 
+          placeholder="Search by name or email..."
+          [(ngModel)]="searchText"
+          (input)="applyFilters()">
+          <span class="search-icon"><img src="assets/img/search.png" style="height: 20px;" alt=""></span>
       </div>
 
-      <div class="actions">
-        <button (click)="viewUser(user)">View</button>
-        <button class="delete" (click)="deleteUser(user.id)">Delete</button>
+      <!-- Role Filter -->
+      <div class="select-wrapper">
+        <select [(ngModel)]="selectedRole" (change)="applyFilters()">
+          <option value="All">All Roles</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <span class="select-icon">▼</span>
+      </div>
+
+      <!-- Sort -->
+      <div class="select-wrapper">
+        <select [(ngModel)]="sortType" (change)="applyFilters()">
+          <option value="">Sort By</option>
+          <option value="az">A → Z</option>
+          <option value="za">Z → A</option>
+        </select>
+        <span class="select-icon">▼</span>
       </div>
 
     </div>
+
+    <!-- Users List -->
+    <div class="user-list">
+      <div class="user-card" *ngFor="let user of paginatedUsers">
+
+        <div class="left">
+          <img src="assets/img/user1.jpg" class="avatar" alt="User Avatar">
+          <div class="info">
+            <h3>{{ user.name }}</h3>
+            <p>{{ user.email }}</p>
+            <span class="role">{{ user.role }}</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button (click)="viewUser(user)">View Profile</button>
+          <button class="delete" (click)="deleteUser(user.id)">Delete</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="page === 1">Previous</button>
+
+      <span>Page {{ page }} of {{ totalPages }}</span>
+
+      <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+    </div>
+
   </div>
 
-  <!-- Pagination -->
-  <div class="pagination" *ngIf="totalPages > 1">
-    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
-
-    <span>Page {{ page }} of {{ totalPages }}</span>
-
-    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
-  </div>
-
-</div>
+</body>
+</html>

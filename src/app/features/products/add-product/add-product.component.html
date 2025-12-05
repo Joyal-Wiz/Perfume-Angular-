@@ -1,52 +1,209 @@
-<div class="add-product-container">
+<!-- HTML Template -->
+<div class="page-wrapper">
+  <!-- Professional Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <div class="header-left">
+        <button class="back-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <div class="header-text">
+          <h1>Add New Product</h1>
+          <p>Fill in the details below to add a new product to your inventory</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          Preview
+        </button>
+      </div>
+    </div>
+  </header>
 
-  <h2>Add New Product</h2>
+  <!-- Main Content -->
+  <div class="add-product-container">
+    <div class="product-layout">
+      <!-- Left Side - Image Section -->
+      <div class="image-section">
+        <div class="section-header">
+          <h3>Product Media</h3>
+          <span class="badge">Required</span>
+        </div>
+        
+        <div class="image-upload-wrapper">
+          <div class="main-image-area">
+            <div class="preview-container" *ngIf="previewImage; else placeholderBox">
+              <img [src]="previewImage" alt="Product Preview">
+              <div class="image-overlay">
+                <button class="overlay-btn" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                  Change
+                </button>
+              </div>
+            </div>
+            <ng-template #placeholderBox>
+              <label class="placeholder-upload">
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
+                <div class="placeholder-content">
+                  <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                  </div>
+                  <h4>Upload Product Image</h4>
+                  <p>Drag and drop or click to browse</p>
+                  <span class="file-info">PNG, JPG up to 5MB</span>
+                </div>
+              </label>
+            </ng-template>
+          </div>
 
-  <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+          <div class="upload-guidelines">
+            <h4>Image Guidelines</h4>
+            <ul>
+              <li>Use high-quality images (min. 800x800px)</li>
+              <li>White or transparent background preferred</li>
+              <li>Show product from multiple angles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <!-- Product Name -->
-    <label>Product Name</label>
-    <input type="text" [(ngModel)]="product.name" name="name" required>
+      <!-- Right Side - Product Details Form -->
+      <div class="details-section">
+        <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+          
+          <!-- Basic Information -->
+          <div class="form-section">
+            <div class="section-header">
+              <h3>Basic Information</h3>
+            </div>
 
-    <!-- Brand -->
-    <label>Brand</label>
-    <select [(ngModel)]="product.brand" name="brand" required>
-      <option value="" disabled>Select brand</option>
-      <option *ngFor="let b of brands" [value]="b">{{ b }}</option>
-    </select>
+            <div class="form-group">
+              <label>
+                Product Name <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                [(ngModel)]="product.name" 
+                name="name" 
+                placeholder="e.g., Premium Wireless Headphones" 
+                required>
+            </div>
 
-    <!-- Category -->
-    <label>Category</label>
-    <select [(ngModel)]="product.category" name="category" required>
-      <option value="" disabled>Select category</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
-    </select>
+            <div class="form-row">
+              <div class="form-group">
+                <label>
+                  Brand <span class="required">*</span>
+                </label>
+                <div class="select-wrapper">
+                  <select [(ngModel)]="product.brand" name="brand" required>
+                    <option value="" disabled>Select brand</option>
+                    <option *ngFor="let b of brands" [value]="b">{{ b }}</option>
+                  </select>
+                </div>
+              </div>
 
-    <!-- Price -->
-    <label>Price</label>
-    <input type="number" [(ngModel)]="product.price" name="price" required>
+              <div class="form-group">
+                <label>
+                  Category <span class="required">*</span>
+                </label>
+                <div class="select-wrapper">
+                  <select [(ngModel)]="product.category" name="category" required>
+                    <option value="" disabled>Select category</option>
+                    <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <!-- Discount -->
-    <label>Discount (%)</label>
-    <input type="number" [(ngModel)]="product.discount" name="discount" required>
+          <!-- Pricing & Inventory -->
+          <div class="form-section">
+            <div class="section-header">
+              <h3>Pricing & Inventory</h3>
+            </div>
 
-    <!-- Stock -->
-    <label>Stock</label>
-    <input type="number" [(ngModel)]="product.stock" name="stock" required>
+            <div class="form-row">
+              <div class="form-group">
+                <label>
+                  Price <span class="required">*</span>
+                </label>
+                <div class="input-with-icon">
+                  <span class="input-prefix">$</span>
+                  <input 
+                    type="number" 
+                    [(ngModel)]="product.price" 
+                    name="price" 
+                    placeholder="0.00" 
+                    step="0.01"
+                    required>
+                </div>
+              </div>
 
-<!-- Image Upload -->
-<label>Upload Image</label>
-<input type="file" (change)="onFileSelected($event)" accept="image/*">
+              <div class="form-group">
+                <label>
+                  Discount <span class="required">*</span>
+                </label>
+                <div class="input-with-icon">
+                  <input 
+                    type="number" 
+                    [(ngModel)]="product.discount" 
+                    name="discount" 
+                    placeholder="0" 
+                    min="0"
+                    max="100"
+                    required>
+                  <span class="input-suffix">%</span>
+                </div>
+              </div>
+            </div>
 
-<!-- Image Preview -->
-<div class="img-preview" *ngIf="previewImage">
-  <img [src]="previewImage" alt="">
+            <div class="form-group">
+              <label>
+                Stock Quantity <span class="required">*</span>
+              </label>
+              <input 
+                type="number" 
+                [(ngModel)]="product.stock" 
+                name="stock" 
+                placeholder="Available units in inventory" 
+                min="0"
+                required>
+              <span class="field-hint">Current inventory level</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button type="button" class="btn-cancel">
+              Cancel
+            </button>
+            <button type="submit" class="btn-save" [disabled]="!productForm.valid">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+              Save Product
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 
-    <!-- Submit -->
-    <button type="submit" [disabled]="!productForm.valid">Save Product</button>
 
-  </form>
-
-</div>

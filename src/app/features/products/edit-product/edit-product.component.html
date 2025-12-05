@@ -1,0 +1,74 @@
+<div class="edit-details-container" *ngIf="product">
+
+  <!-- LEFT SIDE — FORM -->
+  <div class="left-form">
+
+    <h2 class="form-title">Edit Product Details</h2>
+    <p class="form-subtitle">Modify the fields and save your changes</p>
+
+    <!-- PRODUCT NAME -->
+    <label>Product Name</label>
+    <input [(ngModel)]="product.name" placeholder="Enter product name" />
+    <div class="two-col">
+      <div>
+        <label>Brand</label>
+        <input [(ngModel)]="product.brand" placeholder="Brand" />
+      </div>
+      <div>
+        <label>Category</label>
+        <input [(ngModel)]="product.category" placeholder="Category" />
+      </div>
+    </div>
+
+    <!-- PRICE + DISCOUNT -->
+    <div class="two-col">
+      <div>
+        <label>Price (₹)</label>
+        <input type="number" [(ngModel)]="product.price" placeholder="Price" />
+      </div>
+      <div>
+        <label>Discount (%)</label>
+        <input type="number" [(ngModel)]="product.discount" placeholder="0" />
+      </div>
+    </div>
+
+    <!-- STOCK -->
+    <label>Stock Quantity</label>
+    <input type="number" [(ngModel)]="product.stock" />
+
+    <!-- IMAGE UPLOAD -->
+    <label>Upload New Image</label>
+    <input type="file" (change)="onFileSelected($event)" />
+
+
+    <!-- BUTTONS -->
+    <div class="edit-actions">
+      <button class="cancel-btn" (click)="cancel()">Cancel</button>
+      <button class="save-btn" (click)="saveChanges()">Save Changes</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE — IMAGE PREVIEW -->
+  <div class="right-preview">
+    <div class="image-wrapper">
+
+      <div class="offer-badge" *ngIf="product.discount">
+        <span class="badge-text">-{{ product.discount }}%</span>
+        <span class="badge-subtext">OFF</span>
+      </div>
+
+      <div class="image-glow"></div>
+
+      <img [src]="product.image" class="main-image" alt="Product Preview">
+
+      <div class="floating-elements">
+        <div class="float-circle circle-1"></div>
+        <div class="float-circle circle-2"></div>
+        <div class="float-circle circle-3"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

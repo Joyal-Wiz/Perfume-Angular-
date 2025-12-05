@@ -1,5 +1,5 @@
 <!-- HTML Template -->
-<div class="order-container" *ngIf="order">
+<div class="order-container" *ngIf="order && !isAdmin()">
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
@@ -436,6 +436,8 @@
   </div>
 
 </div>
+
+
 <div class="order-container" *ngIf="order && isAdmin()">
 
   <h2>Order Details</h2>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
   selector: 'app-user-management',
@@ -19,7 +20,7 @@ export class UserManagementComponent implements OnInit {
   page = 1;
   pageSize = 6;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toast:ToastService) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -90,13 +91,18 @@ viewUser(user: any) {
 }
 
 
-  // ⭐ Delete user
-  deleteUser(id: number) {
-    if (!confirm("Are you sure you want to delete this user?")) return;
+  //  Delete user
+deleteUser(id: number) {
+  this.users = this.users.filter(u => u.id !== id);
+  localStorage.setItem("users", JSON.stringify(this.users));
 
-    this.users = this.users.filter(u => u.id !== id);
-    localStorage.setItem("users", JSON.stringify(this.users));
+  
+  this.toast.show("User deleted successfully!", "error");
 
-    this.applyFilters(); // refresh view
-  }
+  
+  this.applyFilters();
+}
+
+
+
 }

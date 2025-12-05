@@ -568,3 +568,422 @@ margin: -2px;
     }
   }
 }
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  padding: 2px 8px;
+
+  /* iOS Red Badge Gradient */
+  background: linear-gradient(135deg, #ff3b30 0%, #c82333 100%);
+
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 12px;
+  min-width: 20px;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Inner glossy highlight */
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.4),
+    0 4px 10px rgba(255,59,48,0.35),
+    0 0 0 3px rgba(255,59,48,0.15);
+
+  /* Glassmorphism effect */
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+
+  /* Pop animation */
+  animation: badgePop 0.3s cubic-bezier(.25,1.4,.4,1);
+
+  /* Slight floating effect */
+  transform-origin: center;
+}
+
+@keyframes badgePop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.notif-badge {
+  animation: badgePop 0.3s ease-out, badgeFloat 3s infinite ease-in-out;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-1.5px) scale(1.05); }
+}
+
+
+/* WRAPPER AROUND ICON */
+.notif-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .notif-icon {
+    width: 26px;
+    height: 26px;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.15));
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .notif-icon {
+    transform: scale(1.1);
+  }
+
+  .notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: #ff3b30;   
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+  }
+}
+
+/* DROPDOWN STYLING */
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 320px;
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.12),
+    inset 0 0 40px rgba(255,255,255,0.3);
+
+  animation: fadeDown 0.25s ease-out;
+  z-index: 2000;
+}
+
+/* HEADER */
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1b1b1f;
+  }
+
+  .mark-all {
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: #007aff; /* iPhone Blue */
+    cursor: pointer;
+    padding: 4px 6px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* NOTIFICATION LIST */
+.notif-list {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 4px;
+}
+
+/* SINGLE NOTIFICATION ITEM */
+.notif-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+
+  &.unread {
+    background: rgba(0, 122, 255, 0.12); /* iOS Light Blue highlight */
+    border-left: 4px solid #007aff;
+  }
+
+  .notif-message {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1b1b1f;
+    margin: 0;
+  }
+
+  .notif-time {
+    font-size: 11px;
+    color: #6e6e73;
+  }
+}
+
+/* EMPTY STATE */
+.empty-msg {
+  text-align: center;
+  padding: 24px 0;
+  color: #6e6e73;
+  font-size: 14px;
+}
+
+/* CLEAR BUTTON */
+.clear-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ff3b30;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 59, 48, 0.15);
+  }
+}
+
+/* ANIMATION */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ====================================== */
+/*  BELL ICON AREA + ANIMATIONS */
+/* ====================================== */
+
+.notif-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .notif-icon {
+    width: 26px;
+    height: 26px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  }
+
+  /* ✔ Bell rings when notifications arrive */
+  .notif-icon.ring {
+    animation: bellRing 1.2s ease-out;
+  }
+
+  @keyframes bellRing {
+    0% { transform: rotate(0) scale(1); }
+    15% { transform: rotate(-15deg) scale(1.05); }
+    30% { transform: rotate(15deg); }
+    45% { transform: rotate(-10deg); }
+    60% { transform: rotate(8deg); }
+    75% { transform: rotate(-4deg); }
+    100% { transform: rotate(0) scale(1); }
+  }
+
+  /* 🔵 Glow pulse when unread notifications exist */
+  .notif-icon.ring::after {
+    content: "";
+    position: absolute;
+    top: -6px; left: -6px; right: -6px; bottom: -6px;
+    border-radius: 50%;
+    background: rgba(0,122,255,0.25);
+    animation: pulseGlow 1.5s infinite ease-out;
+    z-index: -1;
+  }
+
+  @keyframes pulseGlow {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  .notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: #ff3b30;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+  }
+}
+
+/* ====================================== */
+/*  GLASSMORPHIC DROPDOWN */
+/* ====================================== */
+
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 330px;
+
+  /* ✔ True iPhone Glassmorphism */
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border-radius: 22px;
+  padding: 18px;
+
+  /* ✔ Glossy border */
+  border: 1px solid rgba(255,255,255,0.35);
+
+  /* ✔ Soft shadows like Apple panels */
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.12),
+    inset 0 0 40px rgba(255,255,255,0.25);
+
+  /* ✔ Haptic bounce animation */
+  animation: dropdownBounce 0.35s cubic-bezier(.25, 1.4, .5, 1);
+  z-index: 2000;
+}
+
+@keyframes dropdownBounce {
+  0% { transform: scale(0.85) translateY(-10px); opacity: 0; }
+  60% { transform: scale(1.03) translateY(2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* ====================================== */
+/*  HEADER */
+/* ====================================== */
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1b1b1f;
+  }
+
+  .mark-all {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #007aff;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ====================================== */
+/*  LIST */
+/* ====================================== */
+
+.notif-list {
+  max-height: 280px;
+  overflow-y: auto;
+  margin-top: 15px;
+  padding-right: 4px;
+}
+
+/* ====================================== */
+/*  SINGLE NOTIFICATION ITEM */
+/* ====================================== */
+
+.notif-item {
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+
+  /* ✔ Smooth card */
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(14px);
+
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.75);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+
+  /* ✔ Unread message highlight (iOS style) */
+  &.unread {
+    background: rgba(0,122,255,0.14);
+    border-left: 5px solid #007aff;
+  }
+
+  .notif-message {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1b1b1f;
+    margin: 0;
+  }
+
+  .notif-time {
+    font-size: 11px;
+    color: #6e6e73;
+    margin-top: 4px;
+  }
+}
+
+/* CLEAR BUTTON */
+.clear-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 14px;
+  color: #ff3b30;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:hover {
+    background: rgba(255, 59, 48, 0.18);
+  }
+}

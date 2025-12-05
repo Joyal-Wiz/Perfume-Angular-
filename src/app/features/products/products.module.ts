@@ -8,6 +8,7 @@ import { ProductFilterComponent } from './product-filter/product-filter.componen
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddProductComponent } from './add-product/add-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AddProductComponent } from './add-product/add-product.component';
     ProductListComponent,
     ProductDetailsComponent,
     ProductFilterComponent,
-    AddProductComponent
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     CommonModule,
