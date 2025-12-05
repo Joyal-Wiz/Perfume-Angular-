@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-checkout-page',
@@ -29,6 +30,7 @@ export class CheckoutPageComponent implements OnInit {
     private paymentService: PaymentService,
      private ngZone: NgZone,
       private cd: ChangeDetectorRef,
+        private notificationService: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -123,9 +125,19 @@ createOrder() {
   localStorage.setItem('orders', JSON.stringify(existing));
 
   localStorage.removeItem('cart');
+
+  // 🔔 SEND NOTIFICATION TO ADMIN
+this.notificationService.push(
+  "order",
+  `Order #${newOrder.id} placed by ${newOrder.checkout.email}`
+);
+
+
   this.order = newOrder;
   this.showModal = true;
 }
+
+
 
   onModalClose() {
     this.showModal = false;

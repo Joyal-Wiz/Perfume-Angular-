@@ -1,13 +1,9 @@
-  <div class="filters-container" style="margin-top: 30px;">
+  <div class="filters-container" >
     <div class="header">
       <h1>L'essence Luxe</h1>
       <p>Curated Fragrances</p>
       <!-- ADMIN ONLY: Add Product -->
-<div *ngIf="role === 'admin'" class="add-product-container">
-  <button class="add-product-btn" routerLink="/products/add">
-    ➕ Add Product
-  </button>
-</div>
+
     </div>
 
 
@@ -21,6 +17,7 @@
         (input)="applyFilters()"
       />
     </div>
+    
 
     <!-- 🌟 CATEGORY FILTER -->
     <div class="glass-dropdown">
@@ -50,9 +47,16 @@
         <option value="low">Low → High</option>
         <option value="high">High → Low</option>
       </select>
+      
     </div>
 
+      <div *ngIf="role === 'admin'" class="add-product-container">
+  <button class="add-product-btn" routerLink="/products/add">
+    ➕ Add Product
+  </button>
+</div>
   </div>
+
 
 
   <!-- PRODUCT GRID -->

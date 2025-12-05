@@ -1,48 +1,88 @@
 <nav class="lux-navbar" [class.shrink]="isShrunk">
 
   <!-- LEFT: LOGO -->
-<div class="nav-left">
-  <div class="logo">
-    <i class="ph ph-spray-bottle logo-icon"></i>
-    <span class="brand-text">Dar-Al-Itr</span>
+  <div class="nav-left">
+    <div class="logo">
+      <i class="ph ph-spray-bottle logo-icon"></i>
+      <span class="brand-text">Dar-Al-Itr</span>
+    </div>
   </div>
-</div>
-
 
   <!-- CENTER MENU -->
   <div class="nav-center">
     <ul class="nav-menu glass-pill">
       <li><a routerLink="/home">Home</a></li>
       <li><a routerLink="/products">Products</a></li>
-      <li *ngIf="isLoggedIn() && role === 'user'"><a routerLink="/about">About</a></li>
-<li *ngIf="isLoggedIn() && role === 'user'">
-  <a routerLink="/orders">Orders</a>
-</li>
+
+      <li *ngIf="isLoggedIn() && role === 'user'">
+        <a routerLink="/about">About</a>
+      </li>
+
+      <li *ngIf="isLoggedIn() && role === 'user'">
+        <a routerLink="/orders">Orders</a>
+      </li>
     </ul>
   </div>
 
   <!-- RIGHT SIDE -->
   <div class="nav-right">
 
+    <!-- WISHLIST -->
     <a routerLink="/wishlist" class="wishlist-nav" *ngIf="!isAdmin()">
-  <div class="icon-wrapper">
-    <img src="assets/img/love.png" style="height: 27px;" alt="" class="wishlist-icon" />
-    
-    <span class="count-badge" *ngIf="wishlistService.getWishlist().length > 0">
-      {{ wishlistService.getWishlist().length }}
-    </span>
-  </div>
-</a>
-
+      <div class="icon-wrapper">
+        <img src="assets/img/love.png" style="height: 27px;" alt="" class="wishlist-icon" />
+        <span class="count-badge" *ngIf="wishlistService.getWishlist().length > 0">
+          {{ wishlistService.getWishlist().length }}
+        </span>
+      </div>
+    </a>
 
     <!-- CART ICON -->
     <div class="cart-icon" routerLink="/cart" *ngIf="!isAdmin()">
-      <i class="ph ph-shopping-cart cart-symbol"><img src="assets/img/cart1.png" style="height: 27px;" alt=""></i>
+      <i class="ph ph-shopping-cart cart-symbol">
+        <img src="assets/img/cart1.png" style="height: 27px;" alt="">
+      </i>
       <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
     </div>
-    
 
-    <!-- USER AUTH -->
+
+    <!-- 🔔 NOTIFICATION BELL (ADMIN ONLY) -->
+    <div class="notif-wrapper" *ngIf="isAdmin()" (click)="toggleDropdown()">
+      <img src="assets/img/bell.png" style="height: 26px;" class="notif-icon">
+      
+
+      <!-- Unread badge -->
+      <span class="notif-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+
+      <!-- DROPDOWN -->
+      <div class="notif-dropdown" *ngIf="dropdownOpen">
+
+        <div class="notif-header">
+          <span>Notifications</span>
+          <button class="mark-all" (click)="markAll()">Mark All</button>
+        </div>
+
+        <div class="notif-list" *ngIf="notifications.length > 0; else emptyState">
+          <div class="notif-item" 
+               *ngFor="let n of notifications"
+               [class.unread]="!n.read"
+               (click)="markAsRead(n.id)">
+             
+            <p class="notif-message">{{ n.message }}</p>
+            <span class="notif-time">{{ n.time }}</span>
+          </div>
+        </div>
+
+        <ng-template #emptyState>
+          <p class="empty-msg">No notifications</p>
+        </ng-template>
+
+        <button class="clear-btn" (click)="clearAll()">Clear All</button>
+      </div>
+    </div>
+
+
+    <!-- USER LOGIN/LOGOUT -->
     <ng-container *ngIf="!isLoggedIn()">
       <a routerLink="/auth/signin" class="login-btn">Login</a>
       <a routerLink="/auth/signup" class="signup-btn">Signup</a>
@@ -51,14 +91,15 @@
     <ng-container *ngIf="isLoggedIn()">
       <a class="logout-btn" (click)="logout()">Logout</a>
     </ng-container>
-<ng-container *ngIf="isLoggedIn()">
-  <a routerLink="/dashboard">
-    <img 
-      [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
-      style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
-  </a>
-</ng-container>
 
+    <!-- USER / ADMIN PROFILE -->
+    <ng-container *ngIf="isLoggedIn()">
+      <a routerLink="/dashboard">
+        <img 
+          [src]="role === 'admin' ? 'assets/img/admin1.png' : 'assets/img/user1.jpg'"
+          style="height: 40px; border: 3px solid #0000007d; border-radius: 25px;">
+      </a>
+    </ng-container>
 
   </div>
 

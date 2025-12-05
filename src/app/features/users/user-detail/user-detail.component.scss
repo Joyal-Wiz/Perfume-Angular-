@@ -1,0 +1,212 @@
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.delete-btn {
+  background: #e63946;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.user-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.orders-title {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.no-orders {
+  padding: 20px;
+  color: #666;
+}
+
+.order-box {
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin-top: 22px;
+}
+
+.order-date,
+.order-total {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+.step {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #ccc;
+  font-size: 14px;
+}
+
+.step.active {
+  background: #4caf50;
+  color: white;
+}
+
+.step.rejected {
+  background: #d7263d;
+  color: white;
+}
+
+/* ITEMS */
+.order-items {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.item-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.price {
+  color: #1c7c2c;
+  font-weight: 600;
+}
+
+.product-btn {
+  margin-left: auto;
+  background: #0077cc;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.user-details-container {
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.profile-img-wrapper {
+  position: relative;
+}
+
+.profile-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  object-fit: cover;
+}
+
+.upload-btn {
+  display: inline-block;
+  margin-top: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4a59ff;
+}
+
+.upload-btn input {
+  display: none;
+}
+
+.role-tag {
+  padding: 5px 10px;
+  background: #dde5ff;
+  border-radius: 5px;
+}
+
+.info-card {
+  background: #fff;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.orders-section {
+  margin-top: 25px;
+}
+
+.order-card {
+  background: #fff;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.order-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+}
+
+.order-item {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.go-product-btn {
+  background: #4a59ff;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.delete-btn {
+  background: #ffdddd;
+  color: red;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 20px;
+}

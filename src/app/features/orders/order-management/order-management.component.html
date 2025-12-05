@@ -15,8 +15,8 @@
   </div>
 
   <!-- ORDER HEADER -->
-  <div class="order-header">
-    <div class="header-left">
+  <div class="order-header" >
+    <div class="header-left" >
       <div class="title-section">
         <h2>Order Details</h2>
         <div class="order-badges">
@@ -436,7 +436,7 @@
   </div>
 
 </div>
-<div class="order-container" *ngIf="order && !isAdmin()">
+<div class="order-container" *ngIf="order && isAdmin()">
 
   <h2>Order Details</h2>
 

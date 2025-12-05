@@ -6,15 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-  // ⭐ BehaviorSubject for LIVE UI updates
+  // ⭐ Role BehaviorSubject for instant UI updates
   role$ = new BehaviorSubject<string>(localStorage.getItem('role') || '');
 
   constructor() {
 
-    // Create admin only if not present
-    const adminExists = localStorage.getItem('adminAccount');
-
-    if (!adminExists) {
+    // Auto-create admin account
+    if (!localStorage.getItem('adminAccount')) {
       const admin = {
         id: 1,
         name: 'Admin',
@@ -22,61 +20,91 @@ export class AuthService {
         password: 'admin123',
         role: 'admin'
       };
-
       localStorage.setItem('adminAccount', JSON.stringify(admin));
     }
   }
 
-  // ⭐ USER SIGNUP
+  /* ─────────────────────────────────────────────
+      USER SIGNUP
+  ─────────────────────────────────────────────── */
   signup(user: any) {
     const users = this.getUsers();
+
     user.role = 'user';
+    user.id = Date.now();
+
     users.push(user);
+
     localStorage.setItem('users', JSON.stringify(users));
     return true;
   }
 
-  // ⭐ SIGNIN for Admin + Normal Users
+  /* ─────────────────────────────────────────────
+      SIGNIN (Admin + User)
+  ─────────────────────────────────────────────── */
   signin(credentials: any): boolean {
 
-    // 1️⃣ Check Admin Login
+    const email = credentials.email.trim().toLowerCase();
+    const password = credentials.password;
+
+    /* --- ADMIN LOGIN --- */
     const admin = JSON.parse(localStorage.getItem('adminAccount') || '{}');
 
     if (
-      credentials.email === admin.email &&
-      credentials.password === admin.password
+      admin.email?.toLowerCase() === email &&
+      admin.password === password
     ) {
-      localStorage.setItem('loggedUser', JSON.stringify(admin));
+      const safeAdmin = {
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        role: 'admin'
+      };
+
+      localStorage.setItem('loggedUser', JSON.stringify(safeAdmin));
       localStorage.setItem('role', 'admin');
 
-      this.role$.next('admin'); // 🔥 Update UI instantly
+      this.role$.next('admin');
       return true;
     }
 
-    // 2️⃣ Check Normal User Login
+    /* --- USER LOGIN --- */
     const users = this.getUsers();
     const foundUser = users.find((u: any) =>
-      u.email === credentials.email &&
-      u.password === credentials.password
+      u.email.toLowerCase() === email &&
+      u.password === password
     );
 
     if (foundUser) {
-      localStorage.setItem('loggedUser', JSON.stringify(foundUser));
+
+      // 🔥 store only essential user data (fixes quota exceeded)
+      const safeUser = {
+        id: foundUser.id,
+        name: foundUser.name,
+        email: foundUser.email,
+        role: 'user'
+      };
+
+      localStorage.setItem('loggedUser', JSON.stringify(safeUser));
       localStorage.setItem('role', 'user');
 
-      this.role$.next('user'); // 🔥 Update UI instantly
+      this.role$.next('user');
       return true;
     }
 
     return false;
   }
 
-  // ⭐ Check logged in status
+  /* ─────────────────────────────────────────────
+      LOGIN STATE
+  ─────────────────────────────────────────────── */
   isLoggedIn(): boolean {
     return !!localStorage.getItem('loggedUser');
   }
 
-  // ⭐ Logout
+  /* ─────────────────────────────────────────────
+      LOGOUT
+  ─────────────────────────────────────────────── */
   logout() {
     localStorage.removeItem('loggedUser');
     localStorage.removeItem('role');
@@ -84,7 +112,9 @@ export class AuthService {
     this.role$.next('');
   }
 
-  // ⭐ Fetch all users
+  /* ─────────────────────────────────────────────
+      GET USERS FROM STORAGE
+  ─────────────────────────────────────────────── */
   private getUsers() {
     const data = localStorage.getItem('users');
     return data ? JSON.parse(data) : [];

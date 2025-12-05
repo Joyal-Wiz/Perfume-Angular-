@@ -62,8 +62,9 @@ export class OrderManagementComponent implements OnInit {
   this.saveUpdatedOrder();
 }
 isAdmin() {
-  return this.role === 'admin';
+  return localStorage.getItem("role") === "admin";
 }
+
 
 
 }

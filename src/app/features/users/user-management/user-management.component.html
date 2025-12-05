@@ -1,1 +1,61 @@
-<p>user-management works!</p>
+<div class="user-management">
+
+  <h2>Registered Users</h2>
+
+  <!-- Search + Filters + Sort -->
+  <div class="filters">
+    
+    <!-- Search -->
+    <input 
+      type="text" 
+      placeholder="Search by name or email..."
+      [(ngModel)]="searchText"
+      (input)="applyFilters()">
+
+    <!-- Role Filter -->
+    <select [(ngModel)]="selectedRole" (change)="applyFilters()">
+      <option value="All">All Roles</option>
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <!-- Sort -->
+    <select [(ngModel)]="sortType" (change)="applyFilters()">
+      <option value="">Sort</option>
+      <option value="az">A → Z</option>
+      <option value="za">Z → A</option>
+    </select>
+
+  </div>
+
+  <!-- Users List -->
+  <div class="user-list">
+    <div class="user-card" *ngFor="let user of paginatedUsers">
+
+      <div class="left">
+        <img src="assets/img/user1.jpg" class="avatar">
+        <div class="info">
+          <h3>{{ user.name }}</h3>
+          <p>{{ user.email }}</p>
+          <span class="role">{{ user.role }}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button (click)="viewUser(user)">View</button>
+        <button class="delete" (click)="deleteUser(user.id)">Delete</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+
+    <span>Page {{ page }} of {{ totalPages }}</span>
+
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+
+</div>

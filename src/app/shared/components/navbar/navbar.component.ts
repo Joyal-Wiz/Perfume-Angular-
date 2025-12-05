@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { WishlistService } from 'src/app/core/services/wishlist.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,12 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   cartCount = 0;
-  role: string = '';   // Updated via BehaviorSubject
+  role: string = '';
   isShrunk = false;
+
+  notifications: any[] = [];
+  unreadCount = 0;
+  dropdownOpen = false;
 
   constructor(
     private cartService: CartService,
@@ -22,48 +27,69 @@ export class NavbarComponent implements OnInit {
     public wishlistService: WishlistService,
     private toast: ToastService,
     private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
 
-    /**  1. CART COUNT LIVE UPDATE */
+    // Cart live update
     this.updateCartCount();
-    this.cartService.cartChanged.subscribe(() => {
-      this.updateCartCount();
-    });
+    this.cartService.cartChanged.subscribe(() => this.updateCartCount());
 
-    /** 2. SUBSCRIBE TO ROLE CHANGES (NO REFRESH NEEDED) */
+    // Role live update
     this.auth.role$.subscribe(role => {
       this.role = role;
     });
+
+    // Notifications live update
+    this.notificationService.notifications$.subscribe(list => {
+      this.notifications = list;
+      this.unreadCount = list.filter(n => !n.read).length;
+    });
   }
 
-  /** Update cart count */
   updateCartCount() {
     const cart = this.cartService.getCart();
-    this.cartCount = cart.reduce((total: number, item: any) => total + item.quantity, 0);
+this.cartCount = cart.reduce(
+  (total: number, item: any) => total + item.quantity,
+  0
+);
   }
 
-  /** ⭐ Logged-in check */
   isLoggedIn() {
     return this.auth.isLoggedIn();
   }
 
-  /**  Logout */
   logout() {
-    this.auth.logout();   // uses auth service
+    this.auth.logout();
     this.toast.show("Logged out successfully!", "success");
     this.router.navigate(['/home']);
   }
 
-  /**  Navbar shrink on scroll */
   @HostListener('window:scroll', [])
   onScroll() {
     this.isShrunk = window.scrollY > 20;
   }
 
-  /**  Admin check */
   isAdmin() {
     return this.role === 'admin';
   }
+
+  // 🔔 Dropdown
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+ markAsRead(id: number) {
+  this.notificationService.markAsRead(id);
+}
+
+markAll() {
+  this.notificationService.markAllAsRead();
+}
+
+clearAll() {
+  this.notificationService.clearAll();
+}
+
 }

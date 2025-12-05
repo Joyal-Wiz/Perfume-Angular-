@@ -1,1 +1,85 @@
-<p>user-detail works!</p>
+<div class="user-details-container" *ngIf="user">
+
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <div class="profile-img-wrapper">
+      <img [src]="profileImageUrl" class="profile-img">
+
+      <!-- Upload Image -->
+      <!-- <label class="upload-btn">
+        <input type="file" accept="image/*" (change)="onImageUpload($event)">
+        Change Photo
+      </label> -->
+    </div>
+
+    <div class="user-basic-info">
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
+      <span class="role-tag">{{ user.role | uppercase }}</span>
+    </div>
+  </div>
+
+  <!-- USER INFO CARD -->
+  <div class="info-card">
+    <h3>User Info</h3>
+
+    <div class="info-row">
+      <strong>Name:</strong>
+      <span>{{ user.name }}</span>
+    </div>
+
+    <div class="info-row">
+      <strong>Email:</strong>
+      <span>{{ user.email }}</span>
+    </div>
+
+    <div class="info-row">
+      <strong>Role:</strong>
+      <span>{{ user.role }}</span>
+    </div>
+  </div>
+
+  <!-- ORDER HISTORY -->
+  <div class="orders-section">
+    <h3>User Orders</h3>
+
+    <div *ngIf="userOrders.length === 0" class="no-orders">
+      No orders placed by this user.
+    </div>
+
+    <div class="order-card" *ngFor="let order of userOrders">
+
+      <div class="order-header">
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p class="status {{ order.status | lowercase }}">
+          {{ order.status }}
+        </p>
+      </div>
+
+      <div class="order-items">
+
+        <div class="order-item" *ngFor="let item of order.items">
+          <img [src]="item.image" class="order-img">
+
+          <div class="item-info">
+            <h4>{{ item.name }}</h4>
+            <p>{{ item.brand }}</p>
+            <p>Qty: {{ item.quantity }}</p>
+            <p>₹{{ item.finalPrice }}</p>
+
+            <button class="go-product-btn" (click)="goToProduct(item.id)">
+              Go to Product
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DELETE USER BUTTON -->
+  <button class="delete-btn" (click)="deleteUser()">Delete User</button>
+
+</div>

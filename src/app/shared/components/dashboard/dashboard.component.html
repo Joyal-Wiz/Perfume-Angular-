@@ -1,6 +1,6 @@
 <div class="dashboard-wrapper">
 
-  <!-- LEFT SIDEBAR -->
+  <!-- SIDEBAR -->
   <div class="sidebar">
 
     <!-- USER CARD -->
@@ -18,7 +18,7 @@
     <!-- MENU -->
     <div class="menu">
 
-      <!-- USER MENU -->
+      <!-- USER -->
       <ng-container *ngIf="role === 'user'">
         <button routerLink="/dashboard" class="active">👤 Profile</button>
         <button routerLink="/dashboard">📦 My Orders</button>
@@ -26,11 +26,18 @@
         <button routerLink="/products">🛍 Shop More</button>
       </ng-container>
 
-      <!-- ADMIN MENU -->
+      <!-- ADMIN -->
       <ng-container *ngIf="role === 'admin'">
-        <button routerLink="/dashboard" class="active">🛠 Admin Dashboard</button>
+        <button 
+          (click)="switchAdminView('dashboard')" 
+          [class.active]="adminView === 'dashboard'">🛠 Admin Dashboard</button>
+
+        <button 
+          (click)="switchAdminView('orders')" 
+          [class.active]="adminView === 'orders'">📑 Manage Orders</button>
+
         <button routerLink="/products">📦 Manage Products</button>
-        <button routerLink="/orders/manage">📑 Manage Orders</button>
+
         <button routerLink="/users/manage">👥 Manage Users</button>
       </ng-container>
 
@@ -38,21 +45,18 @@
 
   </div>
 
-  <!-- RIGHT SIDE CONTENT -->
+  <!-- MAIN CONTENT -->
   <div class="content">
 
-    <!-- ================= USER CONTENT ================= -->
+    <!-- USER CONTENT -->
     <div *ngIf="role === 'user'">
 
-      <!-- EMPTY STATE -->
       <div class="empty" *ngIf="userOrderedItems.length === 0">
-        <img src="assets/img/empty-orders.png" alt="">
+        <img src="assets/img/empty-orders.png">
         <p>No orders yet!</p>
       </div>
 
-      <!-- ORDER HISTORY -->
       <div class="order-history-section" *ngIf="userOrderedItems.length > 0">
-
         <h2 class="section-title">Your Previous Orders</h2>
 
         <div class="orders-grid">
@@ -71,37 +75,77 @@
 
             <span class="status delivered">Delivered</span>
 
-            <!-- VIEW ORDER BUTTON -->
             <button class="view-order-btn" (click)="viewOrder(item)">
               View Order
             </button>
 
           </div>
         </div>
-
       </div>
 
     </div>
 
     <!-- ================= ADMIN CONTENT ================= -->
-    <div *ngIf="role === 'admin'">
 
-      <h2 class="section-title">Welcome Admin</h2>
-      <p>Use the left menu to manage products, orders & users.</p>
+    <!-- ⭐ ADMIN DASHBOARD VIEW -->
+    <div *ngIf="role === 'admin' && adminView === 'dashboard'">
 
-      <!-- ADMIN ORDER STATS -->
-      <div class="admin-stats">
-        <div class="stat-card total">Total Orders: {{ adminStats.total }}</div>
-        <div class="stat-card approved">Approved: {{ adminStats.approved }}</div>
-        <div class="stat-card pending">Pending: {{ adminStats.pending }}</div>
-        <div class="stat-card rejected">Rejected: {{ adminStats.rejected }}</div>
+      <h2 class="section-title">Admin Dashboard</h2>
+
+      <!-- ⭐⭐⭐ SKELETON LOADER ⭐⭐⭐ -->
+      <div class="stats-grid" *ngIf="!dataLoaded">
+        <div class="stat-skeleton"></div>
+        <div class="stat-skeleton"></div>
+        <div class="stat-skeleton"></div>
+        <div class="stat-skeleton"></div>
       </div>
 
-      <!-- PENDING ORDER REQUESTS -->
-      <h3 class="section-title" style="margin-top: 25px;">🛎 New Order Requests</h3>
+      <!-- ⭐⭐⭐ REAL DATA AFTER LOAD ⭐⭐⭐ -->
+      <div class="stats-grid" *ngIf="dataLoaded">
+
+        <div class="stat-card">
+          <h3>{{ totalProducts }}</h3>
+          <p>Total Products</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>{{ totalUsers }}</h3>
+          <p>Total Users</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>{{ totalOrders }}</h3>
+          <p>Total Orders</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>₹{{ totalRevenue.toFixed(2) }}</h3>
+          <p>Total Revenue</p>
+        </div>
+
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card" [class.loaded]="chartsReady">
+          <h3>Monthly Revenue</h3>
+          <canvas id="salesChart"></canvas>
+        </div>
+
+        <div class="chart-card" [class.loaded]="chartsReady">
+          <h3>Order Status Overview</h3>
+          <canvas id="statusChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ⭐ ADMIN — MANAGE ORDERS VIEW -->
+    <div *ngIf="role === 'admin' && adminView === 'orders'">
+
+      <h3 class="section-title">🛎 New Order Requests</h3>
 
       <div *ngIf="pendingOrders.length === 0" class="empty">
-        <img src="assets/img/empty-orders.png" alt="">
+        <img src="assets/img/empty-orders.png">
         <p>No pending order requests</p>
       </div>
 
@@ -112,16 +156,14 @@
 
           <div class="item-info">
             <h3>Order #{{ order.id }}</h3>
-
             <p><strong>User:</strong> {{ order.checkout.email }}</p>
             <p><strong>Total:</strong> ₹{{ order.total }}</p>
             <p><strong>Date:</strong> {{ order.date }}</p>
 
             <span class="status pending">Pending</span>
 
-            <!-- VIEW ORDER DETAILS -->
             <button class="view-order-btn" (click)="openOrder(order)">
-              View & Approve / Reject
+              View
             </button>
           </div>
 
