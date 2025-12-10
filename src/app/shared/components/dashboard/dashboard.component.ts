@@ -42,12 +42,10 @@ dataLoaded = false;
   ngOnInit(): void {
       setTimeout(() => {
     this.loadAdminAnalytics();
-    this.dataLoaded = true;    // 🔥 show real data
+    this.dataLoaded = true;    
   }, 800);
 
-    /* --------------------------
-       LOAD LOGGED USER
-    ----------------------------*/
+    /*LOGGED USER*/
     const storedUser = localStorage.getItem('loggedUser');
     if (storedUser) this.user = JSON.parse(storedUser);
 
@@ -55,9 +53,7 @@ dataLoaded = false;
 
     const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
-    /* --------------------------
-       ADMIN DASHBOARD LOGIC
-    ----------------------------*/
+    /* ADMIN DASHBOARD */
     if (this.role === 'admin') {
 
       this.adminStats.total = allOrders.length;
@@ -84,9 +80,7 @@ setTimeout(() => {
       return;
     }
 
-    /* --------------------------
-       USER DASHBOARD LOGIC
-    ----------------------------*/
+    /*USER DASHBOARD LOGIC*/
     if (!this.user) return;
 
     this.orders = allOrders.filter((o: any) =>
@@ -97,9 +91,7 @@ setTimeout(() => {
     this.userOrderedItems = this.orders.flatMap((order: any) => order.items);
   }
 
-  /* --------------------------
-       ADMIN SUMMARY CALCULATIONS
-  ----------------------------*/
+  /* ADMIN SUMMARY CALCULATIONS*/
   loadAdminAnalytics() {
     const products = JSON.parse(localStorage.getItem('products') || '[]');
     const users = JSON.parse(localStorage.getItem('users') || '[]');
@@ -115,42 +107,43 @@ setTimeout(() => {
     );
   }
 
-  /* --------------------------
-       SALES CHART (BAR)
-  ----------------------------*/
-  loadSalesChart() {
-    const ctx = document.getElementById('salesChart') as HTMLCanvasElement;
+  /*SALES CHART (BAR)*/
+ loadSalesChart() {
+  const ctx = document.getElementById('salesChart') as HTMLCanvasElement;
 
-    // Destroy old chart
-    if (this.salesChart) this.salesChart.destroy();
+  if (this.salesChart) this.salesChart.destroy();
 
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const monthlySales: any = {};
+  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+  const monthlySales: any = {};
 
-    orders.forEach((o: any) => {
-      const month = new Date(o.date).toLocaleString('default', { month: 'short' });
-      if (!monthlySales[month]) monthlySales[month] = 0;
-      monthlySales[month] += Number(o.total);
-    });
+  orders.forEach((o: any) => {
 
-    this.salesChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: Object.keys(monthlySales),
-        datasets: [{
-          label: "Monthly Revenue (₹)",
-          data: Object.values(monthlySales),
-          backgroundColor: "#0d6efd90",
-          borderColor: "#0d6efd",
-          borderWidth: 1
-        }]
-      }
-    });
-  }
+    const datePart = o.date.split(',')[0];  // "4/12/2025"
+    const [day, month, year] = datePart.split('/').map(Number);
 
-  /* --------------------------
-       ORDER STATUS CHART (PIE)
-  ----------------------------*/
+    const correctDate = new Date(year, month - 1, day);
+
+    const monthName = correctDate.toLocaleString('default', { month: 'short' });
+
+    if (!monthlySales[monthName]) monthlySales[monthName] = 0;
+    monthlySales[monthName] += Number(o.total);
+  });
+
+  this.salesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(monthlySales),
+      datasets: [{
+        label: "Monthly Revenue (₹)",
+        data: Object.values(monthlySales),
+        backgroundColor: "#0d6efd90",
+        borderColor: "#0d6efd",
+        borderWidth: 1
+      }]
+    }
+  });
+}
+
   loadStatusChart() {
     const ctx = document.getElementById('statusChart') as HTMLCanvasElement;
 
@@ -173,9 +166,7 @@ setTimeout(() => {
     });
   }
 
-  /* --------------------------
-       CHECK ROLE
-  ----------------------------*/
+  /* CHECK ROLE*/
   isAdmin() {
     return this.role === 'admin';
   }
@@ -198,9 +189,7 @@ setTimeout(() => {
     this.router.navigate(['/orders', order.id]);
   }
 
-  /* --------------------------
-       SWITCH ADMIN VIEW
-  ----------------------------*/
+  /* SWITCH ADMIN VIEW*/
   switchAdminView(view: string) {
     this.adminView = view;
 

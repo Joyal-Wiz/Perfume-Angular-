@@ -27,21 +27,18 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Get logged-in user's role
     const user = localStorage.getItem('loggedUser');
     if (user) {
       const parsedUser = JSON.parse(user);
       this.role = parsedUser.role || localStorage.getItem("role");
     }
 
-    // Load product by ID
     const id = Number(this.route.snapshot.paramMap.get('id'));
     const allProducts = this.productService.getProducts();
 
     this.product = allProducts.find((p: any) => p.id === id);
   }
 
-  // Add to cart (User)
   addToCart() {
     if (!this.authService.isLoggedIn()) {
       this.toast.show("Please login first!", "error");
@@ -53,17 +50,14 @@ export class ProductDetailsComponent implements OnInit {
     this.toast.show("Added to cart!", "success");
   }
 
-  // Buy Now
   buyNow() {
     this.router.navigate(['/checkout']);
   }
 
-  // Admin – Navigate to the Edit Page
   editProduct() {
     this.router.navigate(['/products/edit', this.product.id]);
   }
 
-  // Admin – Delete Product
   openDeleteConfirm() {
     this.showDeleteConfirm = true;
   }
@@ -80,7 +74,6 @@ export class ProductDetailsComponent implements OnInit {
     return data ? JSON.parse(data) : [];
   }
 
-  // Check admin role
   isAdmin() {
     return this.role === 'admin';
   }

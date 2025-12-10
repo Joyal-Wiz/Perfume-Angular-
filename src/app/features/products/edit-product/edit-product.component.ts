@@ -35,13 +35,14 @@ onFileSelected(event: any) {
 }
 
 
-  saveChanges() {
-    this.productService.updateProduct(this.product);
-    this.router.navigate(['/products/details/:id']);
-  }
+saveChanges() {
+  this.productService.updateProduct(this.product);
+  this.router.navigate(['/products/details', this.product.id]);
+}
+
 
   cancel() {
-    this.router.navigate(['/products']);
+    this.router.navigate(['/products/details', this.product.id]);
   }
 
 }

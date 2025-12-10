@@ -51,9 +51,11 @@ export class UserDetailComponent implements OnInit {
     );
   }
 
-  goToProduct(id: number) {
-    this.router.navigate(['/products', id]);
-  }
+goToProduct(id: number) {
+  this.router.navigate(['/products/details', id]);
+}
+
+
 
   deleteUser() {
     if (!confirm("Delete this user?")) return;

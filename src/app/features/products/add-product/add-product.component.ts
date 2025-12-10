@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-add-product',
@@ -28,7 +29,8 @@ export class AddProductComponent implements OnInit {
   constructor(
     private productService: ProductsService,
     private router: Router,
-    private toast: ToastService
+    private toast: ToastService,
+      private imageCompress: NgxImageCompressService
   ) {}
 
   ngOnInit() {
@@ -36,21 +38,27 @@ export class AddProductComponent implements OnInit {
     this.brands = [...new Set(products.map((p: any) => p.brand))] as string[];
   }
 
-  // 📌 Handle File Upload + Preview
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
+onFileSelected(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async (e: any) => {
 
-    const reader = new FileReader();
+    const compressed = await this.imageCompress.compressFile(
+      e.target.result,
+      -1,
+      50, 
+      50 
+    );
 
-    reader.onload = () => {
-      this.previewImage = reader.result;     // For UI preview
-      this.product.image = reader.result;    // Save Base64 in product object
-    };
+    this.previewImage = compressed;   
+    this.product.image = compressed;  
+  };
 
-    reader.readAsDataURL(file);  // Convert to Base64
-  }
+  reader.readAsDataURL(file);
+}
+
 
   saveProduct() {
     let products = this.productService.getProducts();

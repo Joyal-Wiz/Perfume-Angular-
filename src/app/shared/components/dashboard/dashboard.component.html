@@ -87,12 +87,12 @@
 
     <!-- ================= ADMIN CONTENT ================= -->
 
-    <!-- ⭐ ADMIN DASHBOARD VIEW -->
+    <!--  ADMIN DASHBOARD VIEW -->
     <div *ngIf="role === 'admin' && adminView === 'dashboard'">
 
       <h2 class="section-title">Admin Dashboard</h2>
 
-      <!-- ⭐⭐⭐ SKELETON LOADER ⭐⭐⭐ -->
+      <!-- SKELETON LOADER  -->
       <div class="stats-grid" *ngIf="!dataLoaded">
         <div class="stat-skeleton"></div>
         <div class="stat-skeleton"></div>
@@ -100,7 +100,7 @@
         <div class="stat-skeleton"></div>
       </div>
 
-      <!-- ⭐⭐⭐ REAL DATA AFTER LOAD ⭐⭐⭐ -->
+      <!--  REAL DATA AFTER LOAD  -->
       <div class="stats-grid" *ngIf="dataLoaded">
 
         <div class="stat-card">
@@ -139,7 +139,7 @@
 
     </div>
 
-    <!-- ⭐ ADMIN — MANAGE ORDERS VIEW -->
+    <!--  ADMIN — MANAGE ORDERS VIEW -->
     <div *ngIf="role === 'admin' && adminView === 'orders'">
 
       <h3 class="section-title">🛎 New Order Requests</h3>
